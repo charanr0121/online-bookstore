@@ -2,7 +2,7 @@
   <html lang="en" dir="ltr">
     <head>
       <meta charset="utf-8">
-      <link rel="stylesheet" href="main.css">
+      <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
       <link rel="shortcut icon"href="favicon.ico">
     </head>
 
@@ -45,17 +45,17 @@
       <h2>Featured Books</h2>
 
       <figure>
-        <a href="construction.html"> <img src="book_covers/Percy_Jackson.jpg"> </a>
+        <a href="construction"> <img src="{{ url_for('static', filename=book_covers/Percy_Jackson.jpg }}"> </a>
         <figcaption> Percy Jackson</figcaption>
       </figure>
 
       <figure>
-       <a href="construction.html"> <img src="book_covers/Alice_IW.jpg"> </a>
+       <a href="construction"> <img src="book_covers/Alice_IW.jpg"> </a>
         <figcaption> Alice in Wonder Land</figcaption>
       </figure>
 
       <figure>
-        <a href="construction.html"> <img src="book_covers/Harry_Potter.jpg"> </a>
+        <a href="construction"> <img src="book_covers/Harry_Potter.jpg"> </a>
         <figcaption> Percy Jackson</figcaption>
       </figure>
 
@@ -63,17 +63,17 @@
       <h2>Top Sellers</h2>
 
       <figure>
-        <a href="construction.html"> <img src="book_covers/Curiosus_G.jpg"> </a>
+        <a href="construction> <img src="book_covers/Curiosus_G.jpg"> </a>
         <figcaption> Curiosus Geroge</figcaption>
       </figure>
 
       <figure>
-        <a href="construction.html"> <img src="book_covers/green_eggs.png"> </a>
+        <a href="construction"> <img src="book_covers/green_eggs.png"> </a>
         <figcaption> Green Eggs and Ham</figcaption>
       </figure>
 
       <figure>
-        <a href="construction.html"> <img src="book_covers/twillight.jpg"> </a>
+        <a href="construction"> <img src="book_covers/twillight.jpg"> </a>
         <figcaption> Twillight</figcaption>
       </figure>
         

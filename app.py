@@ -15,5 +15,9 @@ def login():
 def books():
 	return render_template('books.html')
 
+@app.route("/construction")
+def construction():
+   return render_template('construction.html')
+
 if __name__ == "__main__":
 	app.run()
