@@ -1,17 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
-    <title>FlaskBlog</title>
-</head>
-<body>
-   <h1>Welcome to the Online Bookstore</h1>
-   <a href="home">Home</a>
-   <a href="books">Books</a>
-    <a href="login">Log In</a>
-    <br>
-    Featured books <br>
-    Top sellers
-</body>
-</html>
+  <html lang="en" dir="ltr">
+    <head>
+      <meta charset="utf-8">
+      <title>Books!</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+      <link rel="shortcut icon"href="favicon.ico">
+    </head>
+
+    <header>
+      <div id = header>
+     <img src="FAVPNG_book-reading-clip-art_HDRQJKvs.png">
+
+     <h3><em>Books</em></h3>
+      
+     <h4>Find the best books for you</h4>
+    </div>
+     <nav id = "nav_menu">
+      <ul>
+        <li ><a id="nav_link" href="main.html">Home</a></li>
+        <li><a href="strength.html">Adventure</a></li>
+        <li><a href="cardio_exercises.html">Fiction</a></li>
+        <li><a href="Stress.html">New</a></li>
+        <li><input type="text" placeholder="Search.."></li>
+    </nav>
+
+    </header>
+
+ 
+    <main>
+        <aside id= aside>
+          <h2>Cool things Here</h2> 
+          <ul>
+            <li><a href="https://www.cdc.gov/physicalactivity/basics/pa-health/index.htm" target="_blank">Physical activity and health </a> </li>
+            <li><a href="https://www.heart.org/en/healthy-living/fitness/fitness-basics/flexibility-exercise-stretching#.WpB8zIPwaUl" target="_blank">Stretching exercises</a> </li>
+            <li><a href="https://www.heart.org/en/healthy-living/fitness/fitness-basics/strength-and-resistance-training-exercise" target="_blank">Strength training</a></li>
+            <li><a href="https://www.health.harvard.edu/exercise-and-fitness/interval-training-for-a-stronger-heart" target= "_blank">Cardiovascular training</a></li>
+            <li><a href="https://www.self.com/gallery/power-yoga-workout" target= "_blank">Yoga workout</a></a></li>
+            
+          </ul>   
+        </aside>
+      
+
+   <div id=section1>
+     <div id= content>
+      <h2>Featured Books</h2>
+
+      <figure>
+        <a href="construction.html"> <img src="book_covers/Percy_Jackson.jpg'}}"> </a>
+        <figcaption> Percy Jackson</figcaption>
+      </figure>
+
+      <figure>
+       <a href="construction.html"> <img src="book_covers/Alice_IW.jpg"> </a>
+        <figcaption> Alice in Wonder Land</figcaption>
+      </figure>
+
+      <figure>
+        <a href="construction.html"> <img src="book_covers/Harry_Potter.jpg"> </a>
+        <figcaption> Percy Jackson</figcaption>
+      </figure>
+
+
+      <h2>Top Sellers</h2>
+
+      <figure>
+        <a href="construction.html"> <img src="book_covers/Curiosus_G.jpg"> </a>
+        <figcaption> Curiosus Geroge</figcaption>
+      </figure>
+
+      <figure>
+        <a href="construction.html"> <img src="book_covers/green_eggs.png"> </a>
+        <figcaption> Green Eggs and Ham</figcaption>
+      </figure>
+
+      <figure>
+        <a href="construction.html"> <img src="book_covers/twillight.jpg"> </a>
+        <figcaption> Twillight</figcaption>
+      </figure>
+        
+      </main> 
+    
+    </div>
+    <footer> 
+      <p id="copyright">&copy; 2019 Shape Up!</p>  
+    </footer>
+
+  </html>
