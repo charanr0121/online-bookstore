@@ -3,7 +3,7 @@
     <head>
       <meta charset="utf-8">
       <title>Book</title>
-      <link href="product_page.css" type="text/css" rel="stylesheet"/>
+      <link rel="stylesheet" href="{{ url_for('static', filename= 'css/product_page.css') }}"
     </head>
 
     <header>
@@ -29,7 +29,7 @@
     <body>
       <div class="container">
         <h1>Book Name</h1>
-        <img src="book_covers/Alice_IW.jpg">
+        <img src="{{ url_for('static', filename= 'book_covers/Percy_Jackson.jpg') }}">
         <table>
           <tbody>
             <tr>
