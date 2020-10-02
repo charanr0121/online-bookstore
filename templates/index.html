@@ -17,7 +17,7 @@
     </div>
      <nav id = "nav_menu">
       <ul>
-        <li ><a id="nav_link" href="main.html">Home</a></li>
+        <li ><a id="nav_link" href="index.html">Home</a></li>
         <li><a href="strength.html">Adventure</a></li>
         <li><a href="cardio_exercises.html">Fiction</a></li>
         <li><a href="Stress.html">New</a></li>
@@ -45,8 +45,10 @@
      <div id= content>
       <h2>Featured Books</h2>
 
+      
+
       <figure>
-        <a href="construction.html"> <img src="book_covers/Percy_Jackson.jpg'}}"> </a>
+        <a href="construction.html"> <img src="{{ url_for('images/book_covers', filename= 'Alice_IW.jpg') }}"> </a>
         <figcaption> Percy Jackson</figcaption>
       </figure>
 
