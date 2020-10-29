@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+  <html lang="en" dir="ltr">
+    <head>
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"
+      <link rel="shortcut icon"href="favicon.ico">
+    </head>
+
+    <header>
+      <div id = header>
+     <img src="FAVPNG_book-reading-clip-art_HDRQJKvs.png">
+
+     <h3><em>Books</em></h3>
+      
+     <h4>Find the best books for you</h4>
+    </div>
+     <nav id = "nav_menu">
+      <ul>
+        <li ><a id="nav_link" href="main.html">Home</a></li>
+        <li><a href="strength.html">Adventure</a></li>
+        <li><a href="cardio_exercises.html">Fiction</a></li>
+        <li><input type="text" placeholder="Search.."></li>
+        <li><a href= "singup.html"> Sign Up</a></li>
+    </nav>
+
+    </header>
+
+
+    <body>
+
+
+        
+        
+        
+<form action="action_page.php" style="border:1px solid #ccc">
+    <div class="container">
+      <h1>Return Item</h1>
+      <p>Please fill in this form to Return item.</p>
+      <hr>
+  
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+  
+      <label for="psw"><b>Adresss</b></label>
+      <input type="text" placeholder="Adress" name="psw" required>
+  
+      <label for="psw-repeat"><b>Credit Card Iformation</b></label>
+      <input type="text" placeholder="Credit Card" name="psw-repeat" required>
+  
+      <label>
+        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+      </label>
+<br>
+      <label for="psw-repeat"><b>Phone Number</b></label>
+      <input type="text" placeholder="Phone Number" name="psw-repeat" required>
+<br>
+      <label for="psw-repeat"><b>Order ID:</b></label>
+      <input type="text" placeholder="Order Id" name="psw-repeat" required>
+
+      
+  
+      <div class="clearfix">
+        <button type="button" class="cancelbtn">Cancel</button>
+        <li><button type="submit" class="button"  onclick="alert('You have successfully signed up! Please Check your email for a confirmation link')" >Sign Up</button></li> 
+      </div>
+    </div>
+  </form>
+
+  <footer> 
+    <p id="copyright">&copy; 2019 Shape Up!</p>  
+  </footer>
+    </body>

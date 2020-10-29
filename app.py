@@ -19,5 +19,21 @@ def books():
 def construction():
    return render_template('construction.html')
 
+@app.route("/edit_profile")
+def edit_profile():
+   return render_template('edit_profile.html')
+
+@app.route("/return")
+def returnBook():
+   return render_template('return.html')
+
+@app.route("/search")
+def search():
+   return render_template('search.html')
+
+@app.route("/re_order")
+def re_order():
+   return render_template('re_order.html')
+
 if __name__ == "__main__":
 	app.run()

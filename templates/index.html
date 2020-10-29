@@ -2,7 +2,7 @@
   <html lang="en" dir="ltr">
     <head>
       <meta charset="utf-8">
-      <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"
       <link rel="shortcut icon"href="favicon.ico">
     </head>
 
@@ -16,11 +16,11 @@
     </div>
      <nav id = "nav_menu">
       <ul>
-        <li ><a id="nav_link" href="main.html">Home</a></li>
+        <li ><a id="nav_link" href="home">Home</a></li>
         <li><a href="strength.html">Adventure</a></li>
         <li><a href="cardio_exercises.html">Fiction</a></li>
-        <li><a href="Stress.html">New</a></li>
         <li><input type="text" placeholder="Search.."></li>
+        <li><a href= "login">Log In</a></li>
     </nav>
 
     </header>
@@ -50,12 +50,12 @@
       </figure>
 
       <figure>
-       <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/Alice_IW.jpg') }}""> </a>
+       <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/Alice_IW.jpg') }}"> </a>
         <figcaption> Alice in Wonder Land</figcaption>
       </figure>
 
       <figure>
-        <a href="construction"> <img src ="{{ url_for('static', filename= 'book_covers/Harry_Potter.jpg') }}"> </a>
+        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/Harry_Potter.jpg') }}"> </a>
         <figcaption> Harry Potter</figcaption>
       </figure>
 
@@ -63,19 +63,28 @@
       <h2>Top Sellers</h2>
 
       <figure>
-        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/Curiosus_G.jpg') }}"> </a>
-        <figcaption> Curiosus Geroge</figcaption>
+        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/Curious_G.jpg') }}"> </a>
+        <figcaption> Curious Geroge</figcaption>
       </figure>
 
       <figure>
-        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/green_eggs.png') }}"> </a>
+        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/green_eggs.jpg') }}"> </a>
         <figcaption> Green Eggs and Ham</figcaption>
       </figure>
 
       <figure>
-        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/twillight.jpg') }}"> </a>
-        <figcaption> Twillight</figcaption>
+        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/twilight.jpg') }}"> </a>
+        <figcaption> Twilight</figcaption>
       </figure>
+
+
+
+       <a href="edit_profile">DEMO EDIT PROFILE</a>
+       <br>
+       <a href="return">DEMO return</a>
+
+       <a href="search">DEMO Search</a>
+       <a href="re_order">DEMO Re-order</a>
         
       </main> 
     
