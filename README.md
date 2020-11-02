@@ -16,3 +16,16 @@ add your db info in this format:
 `mysql_db: ''`
 
 
+Import Statments
+pip3 install flask-bootstrap
+pip3 install flask-wtf
+pip3 flask_mysqldb
+pip3 install flask_mysqldb
+pip3 install pyyaml
+pip3 install email_validator
+
+
+
+
+
+
