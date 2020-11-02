@@ -20,7 +20,11 @@
         <li><a href="strength.html">Adventure</a></li>
         <li><a href="cardio_exercises.html">Fiction</a></li>
         <li><input type="text" placeholder="Search.."></li>
+        {% if session['loggedIn'] %}
+        <li><a href= "logout">Log Out</a></li>
+        {% else %}
         <li><a href= "login">Log In</a></li>
+        {% endif %}
     </nav>
 
     </header>
@@ -42,6 +46,9 @@
 
    <div id=section1>
      <div id= content>
+       {% if session['loggedIn'] %}
+       <h2>Hi {{session['user']}}</h2>
+       {% endif %}
       <h2>Featured Books</h2>
 
       <figure>
