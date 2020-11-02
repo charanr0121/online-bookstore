@@ -23,8 +23,11 @@
       <li><a href="strength.html">Adventure</a></li>
       <li><a href="cardio_exercises.html">Fiction</a></li>
       <li><input type="text" placeholder="Search.."></li>
+      {% if session['loggedIn'] %}
+      <li><a href= "logout">Log Out</a></li>
+      {% else %}
       <li><a href= "login">Log In</a></li>
-  </nav>
+      {% endif %}  </nav>
 
 
 
