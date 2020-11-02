@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
+from itsdangerous import URLSafeTimedSerializer
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 from flask_mysqldb import MySQL
