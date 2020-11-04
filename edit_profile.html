@@ -1,0 +1,51 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"
+    <link rel="shortcut icon"href="favicon.ico">
+  </head>
+
+  <header>
+    <div id = header>
+      <img src="{{ url_for('static', filename= 'css/FAVPNG_book-reading-clip-art_HDRQJKvs.png') }}">
+
+   <h3><em>Books</em></h3>
+    
+   <h4>Find the best books for you</h4>
+  </div>
+   <nav id = "nav_menu">
+    <ul>
+      <li ><a id="nav_link" href="home">Home</a></li>
+      <li><a href="strength.html">Adventure</a></li>
+      <li><a href="cardio_exercises.html">Fiction</a></li>
+      <li><input type="text" placeholder="Search.."></li>
+      <li><a href= "login">Login</a></li>
+    </nav>
+	</header>
+
+
+    <div class="container">
+      <h1>Edit Profile</h1>
+      <p>Please verify your information.</p>
+      <hr>
+	  <form method="POST" action="/edit_profile">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.username) }}
+        {{ wtf.form_field(form.password) }}
+        {{ wtf.form_field(form.newpassword) }}
+		{{ form.hidden_tag() }}
+        {{ wtf.form_field(form.address) }}
+		{{ wtf.form_field(form.name) }}
+		{{ wtf.form_field(form.ccnumber) }}
+  
+      <button type="submit">Update</button></a>
+      </form>
+	</div>
+
+  <footer> 
+    <p id="copyright">&copy; 2019 Shape Up!</p>  
+  </footer>

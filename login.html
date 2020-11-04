@@ -1,0 +1,62 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"
+    <link rel="shortcut icon"href="favicon.ico">
+  </head>
+
+  <header>
+    <div id = header>
+      <img src="{{ url_for('static', filename= 'css/FAVPNG_book-reading-clip-art_HDRQJKvs.png') }}">
+
+   <h3><em>Books</em></h3>
+    
+   <h4>Find the best books for you</h4>
+  </div>
+   <nav id = "nav_menu">
+    <ul>
+      <li ><a id="nav_link" href="home">Home</a></li>
+      <li><a href="strength.html">Adventure</a></li>
+      <li><a href="cardio_exercises.html">Fiction</a></li>
+      <li><input type="text" placeholder="Search.."></li>
+      <li><a href= "signup"> Sign Up</a></li>
+  </nav>
+  </header>
+
+    <div class="container">
+      <h1>Login</h1>
+      <p>Please enter your credentials.</p>
+      <hr>
+      <form method="POST" action="/login">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.username) }}
+        {{ wtf.form_field(form.password) }}
+        {{ wtf.form_field(form.remember) }}
+        <button type="submit">Sign In</button>
+        </form>
+      <!-- <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+  
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+  
+      <label>
+        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+      </label> -->
+  
+      
+
+    </div>
+    <div id= "signup">
+        <p>Dont have an account? sign up here!</p>
+        <a href= "signup"><p>sign up</p></a>
+
+
+        <a href="admin">Admin page</a>
+
+    </div>
+
+  <footer> 
+    <p id="copyright">&copy; 2019 Shape Up!</p>  
+  </footer>

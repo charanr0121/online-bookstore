@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+  <html lang="en" dir="ltr">
+    <head>
+      <meta charset="utf-8">
+      <title>Book</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename= 'css/product_page.css') }}"
+    </head>
+
+    <header>
+      <div id = "header">
+        <img src="{{ url_for('static', filename= 'css/FAVPNG_book-reading-clip-art_HDRQJKvs.png') }}">
+
+     <h3><em>Books</em></h3>
+      
+     <h4>Find the best books for you</h4>
+    </div>
+
+     <nav id = "nav_menu">
+      <ul>
+        <li ><a id="nav_link" href="main.html">Home</a></li>
+        <li><a href="strength.html">Adventure</a></li>
+        <li><a href="cardio_exercises.html">Fiction</a></li>
+        <li><a href= "singup.html"> Sign Up</a></li>
+        <li><input type="text" placeholder="Search.."></li>
+    </nav>
+
+    </header>
+
+    <body>
+      <div class="container">
+        <h1>Book Name</h1>
+        <img src="{{ url_for('static', filename= 'book_covers/Alice_IW.jpg') }}">
+        <table>
+          <tbody>
+            <tr>
+              <td>Author: #######</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Published: #######</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>ISBN: #######</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Category: #######</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Price: #######</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class= "discription"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+           Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et 
+           magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies 
+           nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede 
+           justo, fringilla vel, aliquet nec, vulputate eget, arcu. </p>
+
+        <ul>
+          <li><label for="quantity">Quantity:</label></li>
+          <li>
+            <select id="quantity" name="quantity">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </li> 
+          <li><button type="submit" class="button"  onclick="alert('Item Added to Shopping Cart')" >Add to Cart</button></li> 
+          <a href="checkout.html">Checkout</a>
+        </ul>
+      </div>
+
+      <footer> 
+        <p id="copyright">&copy; 2019 Books!</p>  
+      </footer>
+    </body>
