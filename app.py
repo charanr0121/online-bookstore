@@ -12,6 +12,7 @@ import yaml
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'Secret!'
+app.config.from_pyfile('config.cfg')
 
 loggedIn = False
 username = None
@@ -57,22 +58,23 @@ def login():
 
    if form.validate_on_submit():
       cur = mysql.connection.cursor()
-      cur.execute("select * from user where username=%s",[form.username.data])
+      rowcount = cur.execute("select * from user where username=%s",[form.username.data])
       results = cur.fetchall()
       cur.close()
       print("RESULTS")
-      print(results[0][2])
-      # if(results[0][4]==1):
-      if check_password_hash(results[0][2], form.password.data):
-         session['user'] = form.username.data
-         session['loggedIn'] = True
-         return redirect(url_for('home'))
+      if rowcount > 0:
+         print(results[0][2])
+         if(results[0][4]==1):
+            if check_password_hash(results[0][2], form.password.data):
+               session['user'] = form.username.data
+               session['loggedIn'] = True
+               return redirect(url_for('home'))
+            else:
+               return render_template('login.html', form=form, incorrectPass=True)
+         else:
+            return '<h1>account has not been verified.<h1>'
       else:
-         return '<h1> incorrect password </h1>'
-      # else:
-      #    return '<h1> not verified <h1>'
-      return '<h1>' + form.username.data + ' ' + form.password.data +  ' ' + form.remember.data + '</h1>'
-
+         return render_template('login.html', form=form, incorrectUser=True)
    return render_template('login.html', form=form)
 
 @app.route("/signup", methods=['GET', 'POST'])
@@ -90,7 +92,7 @@ def signup():
       token = s.dumps(form.email.data, salt='email-confirm')
 
       print("TOKENTOKEN " + token)
-      msg = Message('Confirm Email', sender="charan.rama2000@gmail.com", recipients=[form.email])
+      msg = Message('Confirm Email', sender="ugaonlinebookstore@gmail.com", recipients=[form.email.data])
 
       link = url_for('confirm_email', token=token, _external=True)
 
@@ -98,18 +100,19 @@ def signup():
 
       mail.send(msg)
 
-      return '<h1>' + form.email.data + ' ' + form.username.data + ' ' + form.password.data + '</h1>'
+      return '<h1>check for confirmation email at ' + form.email.data + '</h1>'
    
    return render_template('signup.html', form=form)
 
 @app.route("/confirm_email/<token>")
 def confirm_email(token):
    email = s.loads(token, salt='email-confirm', max_age=120)
+   print(email)
    cur = mysql.connection.cursor()
-   cur.execute("UPDATE user SET verified=1 where email=%s",email)
+   cur.execute("UPDATE user SET verified=1 where email like %s",[email])
    mysql.connection.commit()
    cur.close()
-   return '<h1>confirmed!</h1>'
+   return '<h1>your account with email ' + email + ' has been confirmed!</h1>'
 
 
 @app.route("/users")
