@@ -27,6 +27,12 @@ CREATE TABLE `user` (
   `username` varchar(45) NOT NULL,
   `password` varchar(80) NOT NULL,
   `email` varchar(45) NOT NULL,
+  `verified` int NOT NULL DEFAULT '0',
+  `ccnumber` varchar(45) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `admin` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `password_UNIQUE` (`password`),
@@ -40,7 +46,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'charanr0121','sha256$TDr9fLQM$4c4802b318a80cffcf0e1f9d903d80f50be12fcc91271af7b9136ac8225026e2','charanr0121@gmail.com');
+INSERT INTO `user` VALUES (1,'charanr0121','sha256$ppgsDoXN$26c6e5601477b8b964d4bab6876c7e6224d06303494214ef567584c481450d49','charanr0121@gmail.com',1,NULL,'4567 Orange Jungle Drive SW','Charan Ramachandran','4049551708',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-01 19:30:22
+-- Dump completed on 2020-11-05  8:13:16
