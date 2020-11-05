@@ -58,6 +58,25 @@ class ChangePass(FlaskForm):
    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
    newpassword = PasswordField('new password', validators=[Length(min=8, max=80)])
 
+class User():
+   username =""
+   address = ""
+   cc = ""
+   email = ""
+   def _init_(self, username):
+      self.username = username
+      cur = mysql.connection.cursor()
+      rowcount = cur.execute("select * from user where username=%s", self.username)
+      results = cur.fetchall()
+      cur.close()
+      print(results[0][2])
+      # This is where we would get the remaining feilds from the database
+      # And set the corresponding values so that we can acsess them from the html file
+
+      
+      
+      
+
 @app.route("/")
 @app.route("/home")
 def home():
