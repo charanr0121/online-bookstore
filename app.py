@@ -75,8 +75,8 @@ class User():
       print(results[0][5]) #CC NUMBER
       print(results[0][6]) #ADDRESS
       print(results[0][7]) # NAME
-      print(results[0][7]) #PHONE
-      print(results[0][7])
+      print(results[0][8]) #PHONE
+      
 
       # This is where we would get the remaining feilds from the database
       # And set the corresponding values so that we can acsess them from the html file
@@ -113,9 +113,15 @@ def login():
          print(results[0][2])
          if(results[0][4]==1):
             if check_password_hash(results[0][2], form.password.data):
+               user = User(form.username.data)
                session['user'] = form.username.data
                session['loggedIn'] = True
-               user = User(form.username.data)
+               session['email'] = results[0][3]
+               session['cc'] = results[0][5]
+               session['add'] = results[0][6]
+               session['name'] = results[0][7]
+               session['phone'] = results[0][8]
+               
                if results[0][9]==1:
                   session['isAdmin'] = True
                else:

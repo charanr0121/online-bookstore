@@ -40,10 +40,11 @@
       {% if session['loggedIn'] %}
 
       <p>Current Information:</p> 
-      <p>Email: </p>>
-      <p>Name: </p>>
-      <p>address: </p>>
-      <p>Credit Card Information: </p>
+      <p>Email: {{session['email']}}</p>
+      <p>Name: {{session['name']}}</p>
+      <p>address: {{session['add']}}</p>
+      <p>Credit Card Information: {{session['cc']}}</p>
+      <p>Phone Number: {{session['phone']}}</p>
       {% endif %}
     <form method="POST" action="/edit_profile">
       {% if session['loggedIn'] %}
