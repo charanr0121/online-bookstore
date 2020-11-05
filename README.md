@@ -23,6 +23,7 @@ pip3 flask_mysqldb
 pip3 install flask_mysqldb
 pip3 install pyyaml
 pip3 install email_validator
+pip3 install flask_mail
 
 
 
