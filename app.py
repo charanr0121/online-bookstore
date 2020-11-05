@@ -87,6 +87,8 @@ def login():
             if check_password_hash(results[0][2], form.password.data):
                session['user'] = form.username.data
                session['loggedIn'] = True
+               if results[0][9]==1:
+                  session['isAdmin'] = True
                return redirect(url_for('home'))
             else:
                return render_template('login.html', form=form, incorrectPass=True)

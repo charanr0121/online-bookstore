@@ -50,6 +50,9 @@
      <div id= content>
        {% if session['loggedIn'] %}
        <h2>Hi {{session['user']}}</h2>
+        {% if session['isAdmin'] %}
+        <h2>ADMIN</h2>
+        {% endif %}
        {% endif %}
       <h2>Featured Books</h2>
 
