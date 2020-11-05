@@ -96,6 +96,7 @@ def home():
 def logout():
    session['user'] = None
    session['loggedIn'] = False
+   
    return redirect(url_for('home'))
 
 @app.route("/login", methods=['GET', 'POST'])

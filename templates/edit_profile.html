@@ -36,6 +36,14 @@
       <h1>Edit Profile</h1>
       <p>Please verify your information.</p>
       <hr>
+
+      {% if session['loggedIn'] %}
+
+      <p>Current Information:</p> 
+      <p>Email: </p>>
+      <p>Name: </p>>
+      <p>address: </p>>
+      <p>Credit Card Information: </p>>
     <form method="POST" action="/edit_profile">
       {% if session['loggedIn'] %}
         {{ form.hidden_tag() }}
