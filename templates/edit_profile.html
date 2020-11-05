@@ -43,7 +43,8 @@
       <p>Email: </p>>
       <p>Name: </p>>
       <p>address: </p>>
-      <p>Credit Card Information: </p>>
+      <p>Credit Card Information: </p>
+      {% endif %}
     <form method="POST" action="/edit_profile">
       {% if session['loggedIn'] %}
         {{ form.hidden_tag() }}
