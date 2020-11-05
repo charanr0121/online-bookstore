@@ -36,8 +36,27 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+   name = StringField('full name', validators=[InputRequired(), Length(min=1, max=100)])
    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
+   phone = StringField('phone number', validators=[InputRequired(), Length(min=7, max=15)])
    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
+   ccnumber = StringField('credit card number', validators=[InputRequired(), Length(min=14, max=18)])
+   address = StringField('address', validators=[InputRequired(), Length(min=2, max=80)])
+
+class EditForm(FlaskForm):
+   address = StringField('address', validators=[Length(min=2, max=80)])
+   name = StringField('full name', validators=[Length(min=1, max=100)])
+   ccnumber = StringField('credit card number', validators=[Length(min=14, max=18)])
+   currpassword = PasswordField('current password', validators=[Length(min=8, max=80)])
+   newpassword = PasswordField('new password', validators=[Length(min=8, max=80)])
+
+class ForgotPass(FlaskForm):
+   username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
+   email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+
+class ChangePass(FlaskForm):
+   username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
+   newpassword = PasswordField('new password', validators=[Length(min=8, max=80)])
 
 @app.route("/")
 @app.route("/home")
@@ -85,7 +104,7 @@ def signup():
    if form.validate_on_submit():
       cur = mysql.connection.cursor()
       hashedPassword = generate_password_hash(form.password.data, method='sha256')
-      cur.execute("INSERT INTO user(username, email, password) VALUES(%s, %s, %s)",(form.username.data, form.email.data, hashedPassword))
+      cur.execute("INSERT INTO user(username, email, password, phone, address, name) VALUES(%s, %s, %s, %s, %s, %s)",(form.username.data, form.email.data, hashedPassword, form.phone.data, form.address.data, form.name.data))
       mysql.connection.commit()
       cur.close()
 
@@ -131,9 +150,92 @@ def books():
 def construction():
    return render_template('construction.html')
 
-@app.route("/edit_profile")
+@app.route("/edit_profile", methods=['GET', 'POST'])
 def edit_profile():
-   return render_template('edit_profile.html', loggedIn=loggedIn, username=username)
+   form = EditForm()
+
+   if form.validate_on_submit():
+      cur = mysql.connection.cursor()
+      hashedPassword = generate_password_hash(form.newpassword.data, method='sha256')
+      cur.execute("""
+         UPDATE user
+         SET address=%s, name=%s, ccnumber=%s, password=%s
+         WHERE username=%s
+      """, (form.address.data, form.name.data, form.ccnumber.data,hashedPassword, session['user']))
+
+      cur.execute("select * from user where username=%s",[session['user']])
+      results = cur.fetchall()
+      emailAddress = results[0][3]
+      mysql.connection.commit()
+      cur.close()
+
+      print(emailAddress)
+      msg = Message('Profile Changed', sender="ugaonlinebookstore@gmail.com", recipients=[emailAddress])
+
+
+      msg.body = 'Your profile has been updated.'
+
+      mail.send(msg)
+
+      return render_template('edit_profile.html', form=form, loggedIn=loggedIn, username=username, profileChanged=True)
+
+   return render_template('edit_profile.html', form=form, loggedIn=loggedIn, username=username)
+
+@app.route("/forgot_password", methods=['GET', 'POST']) #page with form that asks for user and email
+def forgot_password():
+   form = ForgotPass()
+   if form.validate_on_submit():
+      cur = mysql.connection.cursor()
+      cur.execute("select * from user where username=%s", [form.username.data])
+      results = cur.fetchall()
+      cur.close()
+      if form.email.data != results[0][3]:
+         return render_template('forgot_password.html', form=form, incorrectInfo=True)#incorrect info
+      else:
+         token = s.dumps(form.email.data, salt='forgot-pass')
+         print("TOKENTOKEN " + token)
+         msg = Message('Change Password', sender="ugaonlinebookstore@gmail.com", recipients=[form.email.data])
+
+         link = url_for('change_password_load', token=token, _external=True)
+
+         msg.body = 'Change your password here {}'.format(link)
+         
+         mail.send(msg)
+
+      return '<h1>check email to change password at ' + form.email.data + '</h1>'
+
+   return render_template('forgot_password.html', form=form)
+
+@app.route("/change_password", methods=['GET', 'POST']) #form that asks for what new password u want
+def change_password():
+   form = ChangePass()
+   if form.validate_on_submit():
+      cur = mysql.connection.cursor()
+      print("HHHHHH")
+      hashedPassword = generate_password_hash(form.newpassword.data, method='sha256')
+      rowcount = cur.execute("select * from user where username like %s", [form.username.data])
+      if rowcount > 0:
+         cur.execute("""
+         UPDATE user 
+         SET password=%s 
+         where username like %s""",(hashedPassword, form.username.data))
+         mysql.connection.commit()
+         cur.close()
+         return redirect(url_for('login'))
+      else:
+         cur.close()
+         return render_template('change_password.html', form=form, wrongUsername=True)
+   return render_template('change_password.html', form=form)
+
+@app.route("/change_password_load/<token>", methods=['GET', 'POST'])
+def change_password_load(token):
+   pass_ = s.loads(token, salt='forgot-pass', max_age=120)
+   return redirect(url_for('change_password'))
+# @app.route("/edit_profile_2", methods=['GET', 'POST'])
+# def edit_profile_2():
+#    form = EditForm()
+
+#    return render_template('edit_profile_2.html', form=form)
 
 @app.route("/return")
 def returnBook():

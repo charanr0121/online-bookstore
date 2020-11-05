@@ -29,29 +29,9 @@
 
 
     <div class="container">
-      <h1>Edit Profile</h1>
-      <p>Please verify your information.</p>
-      <hr>
-    <form method="POST" action="/edit_profile">
-      {% if loggedIn %}
-        {{ form.hidden_tag() }}
-        {{ wtf.form_field(form.currpassword) }}
-        {{ wtf.form_field(form.newpassword) }}
-        {{ form.hidden_tag() }}
-        {{ wtf.form_field(form.address) }}
-		    {{ wtf.form_field(form.name) }}
-		    {{ wtf.form_field(form.ccnumber) }}
+      <p> Success! Your profile has been updated.</p>
 
-        {% if profileChanged %}
-        <p> Success! Your profile has been updated.</p>
-        {% endif %}
-      {% else %}
-      <p>Please log in.</p>
-      {% endif %}
-      <button type="submit">Update</button></a>
-      </form>
-	</div>
 
   <footer> 
     <p id="copyright">&copy; 2019 Shape Up!</p>  
-  </footer>
+  </footer> 

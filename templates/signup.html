@@ -35,9 +35,13 @@
   
       <form method="POST" action="/signup">
         {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.name) }}
         {{ wtf.form_field(form.email) }}
         {{ wtf.form_field(form.username) }}
         {{ wtf.form_field(form.password) }}
+        {{ wtf.form_field(form.phone) }}
+        {{ wtf.form_field(form.address) }}
+        {{ wtf.form_field(form.ccnumber) }}
 
         <button type="submit">Sign Up</button>
         </form>
