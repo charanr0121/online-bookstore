@@ -40,8 +40,8 @@ class RegisterForm(FlaskForm):
    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
    phone = StringField('phone number', validators=[InputRequired(), Length(min=7, max=15)])
    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
-   ccnumber = StringField('credit card number', validators=[InputRequired(), Length(min=14, max=18)])
-   address = StringField('address', validators=[InputRequired(), Length(min=2, max=80)])
+   ccnumber = StringField('credit card number', validators=[])
+   address = StringField('address', validators=[])
 
 class EditForm(FlaskForm):
    address = StringField('address', validators=[Length(min=2, max=80)])
