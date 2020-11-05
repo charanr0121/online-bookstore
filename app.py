@@ -89,6 +89,8 @@ def login():
                session['loggedIn'] = True
                if results[0][9]==1:
                   session['isAdmin'] = True
+               else:
+                  session['isAdmin'] = False
                return redirect(url_for('home'))
             else:
                return render_template('login.html', form=form, incorrectPass=True)
