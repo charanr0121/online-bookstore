@@ -63,13 +63,21 @@ class User():
    address = ""
    cc = ""
    email = ""
-   def _init_(self, username):
+   def __init__(self, username):
       self.username = username
       cur = mysql.connection.cursor()
-      rowcount = cur.execute("select * from user where username=%s", self.username)
+      rowcount = cur.execute("select * from user where username=%s", [self.username])
       results = cur.fetchall()
       cur.close()
-      print(results[0][2])
+      print("IN USER")
+      print(results[0][2]) #PASSWORD
+      print(results[0][3]) #EMAIL
+      print(results[0][5]) #CC NUMBER
+      print(results[0][6]) #ADDRESS
+      print(results[0][7]) # NAME
+      print(results[0][7]) #PHONE
+      print(results[0][7])
+
       # This is where we would get the remaining feilds from the database
       # And set the corresponding values so that we can acsess them from the html file
 
@@ -106,8 +114,11 @@ def login():
             if check_password_hash(results[0][2], form.password.data):
                session['user'] = form.username.data
                session['loggedIn'] = True
+               user = User(form.username.data)
                if results[0][9]==1:
                   session['isAdmin'] = True
+               else:
+                  session['isAdmin'] = False
                return redirect(url_for('home'))
             else:
                return render_template('login.html', form=form, incorrectPass=True)

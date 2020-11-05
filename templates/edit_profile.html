@@ -23,8 +23,12 @@
       <li><a href="strength.html">Adventure</a></li>
       <li><a href="cardio_exercises.html">Fiction</a></li>
       <li><input type="text" placeholder="Search.."></li>
-      <li><a href= "login">Login</a></li>
-    </nav>
+      {% if session['loggedIn'] %}
+      <li><a href= "logout">Log Out</a></li>
+      {% else %}
+      <li><a href= "login">Log In</a></li>
+      {% endif %}
+      </nav>
 	</header>
 
 
@@ -33,7 +37,7 @@
       <p>Please verify your information.</p>
       <hr>
     <form method="POST" action="/edit_profile">
-      {% if loggedIn %}
+      {% if session['loggedIn'] %}
         {{ form.hidden_tag() }}
         {{ wtf.form_field(form.currpassword) }}
         {{ wtf.form_field(form.newpassword) }}
