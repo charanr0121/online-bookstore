@@ -210,4 +210,42 @@ figure {
 
 }
 
+/*
+*Login Page CSS
+*/
+
+
+
+
+#frmlogin button {
+    width: 75px;
+}
+
+#frmlogin input{   
+    margin-bottom: 1em;
+}
+
+
+fieldset {
+    border: 3px solid #4682b4;
+    width: 50%
+}
+
+#forgot_password  {
+
+    font-size: 70%;
+}
+
+/*
+*Sign Up Page CSS
+*/
+
+
+
+#sign_up {
+    padding-left: 5em;
+}
+
+
+
 
