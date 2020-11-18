@@ -16,38 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user`
+-- Table structure for table `book`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `book`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(80) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `verified` int NOT NULL DEFAULT '0',
-  `ccnumber` varchar(45) DEFAULT NULL,
-  `address` varchar(45) DEFAULT NULL,
-  `name` varchar(100) NOT NULL,
-  `phone` varchar(45) DEFAULT NULL,
-  `admin` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username_UNIQUE` (`username`),
-  UNIQUE KEY `password_UNIQUE` (`password`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+CREATE TABLE `book` (
+  `isbn` varchar(45) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `buy_price` decimal(10,0) NOT NULL,
+  `sell_price` decimal(10,0) NOT NULL,
+  `category` varchar(45) NOT NULL,
+  `author` varchar(45) NOT NULL,
+  `pic` varchar(45) DEFAULT NULL,
+  `edition` varchar(45) DEFAULT NULL,
+  `publisher` varchar(45) DEFAULT NULL,
+  `pubyear` datetime DEFAULT NULL,
+  `min_threshold` int DEFAULT NULL,
+  PRIMARY KEY (`isbn`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `book`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'adminr','sha256$scsaOiNo$b2c171729ac577cbb493dcc0264b8edd2ceb92002dbf9ed6929e9067ea04ac85','cheftamillionaire@gmail.com',1,NULL,'','Admin R','7702701173',1),(2,'charanr0121','sha256$WdkUyZpJ$bf91e9dc335e3d9a8047f5df5084e4168f28ee265e33f0bf47cff97a8371c278','charanr0121@gmail.com',1,'55555555555555','4321 S Main St','Charan R','4049551708',0),(13,'charanr0121hg','sha256$8fZ4ld2q$dcb79581a4a4f5a495bbe3f712a6915d77d8b0f93b18f5991b418cccb9d6a8ae','charanr01g21@gmail.com',0,NULL,'4567 Orange Jungle Drive SW','Charan Ramachandran','4049551708',0);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `book` WRITE;
+/*!40000 ALTER TABLE `book` DISABLE KEYS */;
+INSERT INTO `book` VALUES ('9780241335437','Turtles All the Way Down',10,10,'Young Adult','John Green',NULL,NULL,NULL,NULL,NULL),('9780439362139','Harry Potter and the Sorcerer\'s Stone',10,10,'Fantasy','J.K. Rowling',NULL,NULL,NULL,NULL,NULL),('9780553448146','Artemis',10,10,'Science Fiction','Andy Weir',NULL,NULL,NULL,NULL,NULL),('9780735811669','Alice\'s Adventures in Wonderland',10,10,'Classic','Lewis Carroll',NULL,NULL,NULL,NULL,NULL),('9780786838653','The Lightning Thief',10,10,'Fantasy','Rick Riordan',NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
