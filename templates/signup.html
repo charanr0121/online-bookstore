@@ -103,8 +103,11 @@
 
           <div class="row">
             <div class="boxed">
-              <form action="contact.php" class="contact-form" id="contactForm" method="post">
+              <form action="signup" class="contact-form" id="contactForm" method="post">
                 <div class="row">
+                  {% if duplicateEntry %}
+                    <p>An account already exists with the same username or email</p>
+                  {% endif %}
                   <div class="col-sm-6">
                     <div class="form-group">
                       {{ form.hidden_tag() }}

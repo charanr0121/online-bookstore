@@ -90,7 +90,11 @@ class User():
 def home():
    print(loggedIn)
    print(username)
-   return render_template('index.html')
+   cur = mysql.connection.cursor()
+   rowcount = cur.execute("select * from book")
+   results = cur.fetchall()
+   cur.close()
+   return render_template('index.html', books=results)
 
 @app.route("/logout")
 def logout():
@@ -141,24 +145,29 @@ def signup():
 
       
    if form.validate_on_submit():
-      cur = mysql.connection.cursor()
-      hashedPassword = generate_password_hash(form.password.data, method='sha256')
-      cur.execute("INSERT INTO user(username, email, password, phone, address, name) VALUES(%s, %s, %s, %s, %s, %s)",(form.username.data, form.email.data, hashedPassword, form.phone.data, form.address.data, form.name.data))
-      mysql.connection.commit()
+      try:
+         cur = mysql.connection.cursor()
+         hashedPassword = generate_password_hash(form.password.data, method='sha256')
+         cur.execute("INSERT INTO user(username, email, password, phone, address, name) VALUES(%s, %s, %s, %s, %s, %s)",(form.username.data, form.email.data, hashedPassword, form.phone.data, form.address.data, form.name.data))
+         mysql.connection.commit()
+         token = s.dumps(form.email.data, salt='email-confirm')
+
+         print("TOKENTOKEN " + token)
+         msg = Message('Confirm Email', sender="ugaonlinebookstore@gmail.com", recipients=[form.email.data])
+
+         link = url_for('confirm_email', token=token, _external=True)
+
+         msg.body = 'Your confirmation link is {}'.format(link)
+
+         mail.send(msg)
+
+         return '<h1>check for confirmation email at ' + form.email.data + '</h1>'
+
+      except:
+         print("DUPLICATE ENTRY")
+         return render_template('signup.html', form=form, duplicateEntry=True)
+
       cur.close()
-
-      token = s.dumps(form.email.data, salt='email-confirm')
-
-      print("TOKENTOKEN " + token)
-      msg = Message('Confirm Email', sender="ugaonlinebookstore@gmail.com", recipients=[form.email.data])
-
-      link = url_for('confirm_email', token=token, _external=True)
-
-      msg.body = 'Your confirmation link is {}'.format(link)
-
-      mail.send(msg)
-
-      return '<h1>check for confirmation email at ' + form.email.data + '</h1>'
    
    return render_template('signup.html', form=form)
 

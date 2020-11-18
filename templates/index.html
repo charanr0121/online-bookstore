@@ -34,7 +34,7 @@
           <div class="row">
               <div class="col-sm-6">
                 <a href="home">
-                  <a href="home"><img src="assets/images/book_logo.png" alt="logo"></a>
+                  <a href="home"><img width=250px src="{{ url_for('static', filename= 'site_images/book_logo.png') }}" alt="logo"></a>
                 </a>
               </div>
               <div class="col-sm-3 col-sm-offset-3 text-right">
@@ -89,6 +89,11 @@
         <div class="intro row">
           <div class="overlay"></div>
           <div class="col-sm-6 col-sm-offset-6">
+            {% if session['loggedIn'] %}
+
+            <h2 class="header-quote">Welcome {{session['user']}}</h2>
+                {% endif %}
+
               <h2 class="header-quote">Buy or rent books</h2>
               <p>
                   <!-- Another line of info here -->
@@ -111,6 +116,20 @@
               </div>
           </div>
       </div>
+
+      {% for book in books %}
+        {% if loop.index == 0 %}
+            <div class="row">
+        {% endif %}
+        <div class="col-sm-4">
+                <a href="construction"> <img class="img-responsive" src={{"http://covers.openlibrary.org/b/isbn/" + book[0] + ".jpg"}}> </a>
+                <h3 class="product-title">{{book[4]}}</h3>
+        </div>
+        {% if loop.index == 0 %}
+            </div>
+        {% endif %}
+      {% endfor %}
+
       <div class="row">
           <div class="col-sm-4">
               <div class="porduct-box">
