@@ -2,49 +2,165 @@
   <html lang="en" dir="ltr">
     <head>
       <meta charset="utf-8">
-      <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Bookstore</title>
+
+
+       <!-- google fonts -->
+       <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+       <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+       <!-- CSS files -->
+       <link href="{{url_for('static', filename= 'css/bootstrap.min.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/magnific-popup.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/owl.carousel.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/owl.carousel.theme.min.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/ionicons.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/main.css') }}" rel="stylesheet">
+       
+       
+   
       <link rel="shortcut icon"href="favicon.ico">
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     </head>
+    
+    <body>
+ <!-- Bookstore Header -->
+    <div class="site-header-bg">
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-6">
+                <a href="home">
+                  <a href="index.html"><img src="assets/images/book_logo.png" alt="logo"></a>
+                </a>
+              </div>
+              <div class="col-sm-3 col-sm-offset-3 text-right">
+                  <span class="ion-android-cart"></span> 0 books
+                  <form>
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="">
+                          <span class="input-group-btn">
+                              <button class="btn btn-default btn-robot" type="button">Search</button>
+                          </span>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Header -->
 
-    <header>
-      <div id = header>
-     <img src="{{ url_for('static', filename= 'css/FAVPNG_book-reading-clip-art_HDRQJKvs.png') }}">
 
-     <h3><em>Books</em></h3>
-      
-     <h4>Find the best books for you</h4>
-    </div>
-     <nav id = "nav_menu">
-      <ul>
-        <li ><a id="nav_link" href="home">Home</a></li>
-        <li><a href="strength.html">Adventure</a></li>
-        <li><a href="cardio_exercises.html">Fiction</a></li>
-        <li><input type="text" placeholder="Search.."></li>
-        {% if session['loggedIn'] %}
-        <li><a href= "logout">Log Out</a></li>
-        {% else %}
-        <li><a href= "login">Log In</a></li>
-        {% endif %}
-    </nav>
 
-    </header>
+  <section id="header" class="main-header">
+    <div class="container">
 
- 
-    <main>
-        <aside id= aside>
-          <h2>Cool things Here</h2> 
-          <ul>
-            <li><a href="https://www.cdc.gov/physicalactivity/basics/pa-health/index.htm" target="_blank">Physical activity and health </a> </li>
-            <li><a href="https://www.heart.org/en/healthy-living/fitness/fitness-basics/flexibility-exercise-stretching#.WpB8zIPwaUl" target="_blank">Stretching exercises</a> </li>
-            <li><a href="https://www.heart.org/en/healthy-living/fitness/fitness-basics/strength-and-resistance-training-exercise" target="_blank">Strength training</a></li>
-            <li><a href="https://www.health.harvard.edu/exercise-and-fitness/interval-training-for-a-stronger-heart" target= "_blank">Cardiovascular training</a></li>
-            <li><a href="https://www.self.com/gallery/power-yoga-workout" target= "_blank">Yoga workout</a></a></li>
-            
-          </ul>   
-        </aside>
-      
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="site-nav-bar">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="home">About</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="pages.html">Pages</a></li>
+                        {% if session['loggedIn'] %}
+                        <li><a href="logout">Log Out</a></li>
+                        {% else %}
+                        <li><a href= "login">Log In</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+
+        <div class="intro row">
+          <div class="overlay"></div>
+          <div class="col-sm-6 col-sm-offset-6">
+              <h2 class="header-quote">Buy or rent books</h2>
+              <p>
+                  <!-- Another line of info here -->
+              </p>
+              <h1 class="header-title">Book<br><span class="thin">Store</span></h1>
+          </div>
+      </div>
+  </div>
+  <div class="nutral"></div>
+</section>
+
+
+<section id="product" class="product">
+  <div class="container section-bg">
+      <div class="row">
+          <div class="col-sm-12">
+              <div class="title-box">
+                  <h2 class="title">Welcome to our <span>Bookstore</span></h2>
+                  <a href="#" class="btn btn-default btn-robot">view books</a>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-4">
+              <div class="porduct-box">
+                  <img class="img-responsive" src="{{ url_for('static', filename= 'book_covers/Percy_Jackson.jpg') }}" alt="product">
+                  <h3 class="product-title">Fantasy</h3>
+              </div>
+          </div>
+          <div class="col-sm-4">
+              <div class="porduct-box">
+                  <img class="img-responsive" src="{{ url_for('static', filename= 'book_covers/Harry_Potter.jpg') }}" alt="product">
+                  <h3 class="product-title">Adventure</h3>
+              </div>
+          </div>
+          <div class="col-sm-4">
+              <div class="porduct-box">
+                  <img class="img-responsive" src="{{ url_for('static', filename= 'book_covers/Curious_G.jpg') }}" alt="product">
+                  <h3 class="product-title">For Kids</h3>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-12">
+              <div class="classic-title">
+                  <div class="stiker">
+                      <h3 class="inner-stiker">Why choose us?</h3>
+                  </div>
+                  <h3 class="outer-stiker">We Received *some award*</h3>
+                  <div class="incline-div"></div>
+              </div>
+          </div>
+          <div class="boxed">
+              <div class="col-sm-4">
+                  <p class="p-large">
+                      Paragraph of text
+                  </p>
+              </div>
+              <div class="col-sm-4">
+                  <p>
+                      Paragraph of text
+                  </p>
+              </div>
+              <div class="col-sm-4">
+                  <p>
+                      Paragraph of text
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
 
    <div id=section1>
      <div id= content>
@@ -56,41 +172,7 @@
        {% endif %}
       <h2>Featured Books</h2>
 
-      <figure>
-        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/Percy_Jackson.jpg') }}"> </a>
-        <figcaption> Percy Jackson</figcaption>
-      </figure>
-
-      <figure>
-       <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/Alice_IW.jpg') }}"> </a>
-        <figcaption> Alice in Wonder Land</figcaption>
-      </figure>
-
-      <figure>
-        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/Harry_Potter.jpg') }}"> </a>
-        <figcaption> Harry Potter</figcaption>
-      </figure>
-
-
-      <h2>Top Sellers</h2>
-
-      <figure>
-        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/Curious_G.jpg') }}"> </a>
-        <figcaption> Curious Geroge</figcaption>
-      </figure>
-
-      <figure>
-        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/green_eggs.jpg') }}"> </a>
-        <figcaption> Green Eggs and Ham</figcaption>
-      </figure>
-
-      <figure>
-        <a href="construction"> <img src="{{ url_for('static', filename= 'book_covers/twilight.jpg') }}"> </a>
-        <figcaption> Twilight</figcaption>
-      </figure>
-
-
-
+    
        <a href="edit_profile">DEMO EDIT PROFILE</a>
        <br>
        <a href="return">DEMO return</a>
@@ -101,8 +183,19 @@
       </main> 
     
     </div>
-    <footer> 
-      <p id="copyright">&copy; 2019 Shape Up!</p>  
-    </footer>
+    <footer class="footer text-center">
+      <h3> Bookstore </a></h3>
+  </footer>
+<!-- Scripts -->
 
-  </html>
+
+
+
+<script src="{{ url_for('static', filename= 'javascript/jquery-1.12.3.min.js') }}"></script>
+<script src="{{ url_for('static', filename= 'javascript/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename= 'javascript/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ url_for('static', filename= 'javascript/js/owl.carousel.min.js') }}"></script>
+<script src="{{ url_for('static', filename= 'javascript/js/script.js') }}"></script>
+
+</body>
+</html>
