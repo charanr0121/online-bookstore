@@ -3,7 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
-from wtforms import StringField, PasswordField, BooleanField
+from wtforms import StringField, PasswordField, BooleanField, IntegerField
 from wtforms.validators import InputRequired, Email, Length
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -31,6 +31,14 @@ mysql = MySQL(app)
 
 class RemoveBookForm(FlaskForm):
    isbn = StringField('ISBN', validators=[InputRequired(), Length(min=10, max=15)])
+
+class AddBookForm(FlaskForm):
+   isbn = StringField('ISBN', validators=[InputRequired(), Length(min=10, max=15)])
+   title = StringField('Title', validators=[InputRequired(), Length(min=1, max=45)])
+   buy_price = IntegerField('Buy Price', validators=[InputRequired()])
+   sell_price = IntegerField('Sell Price', validators=[InputRequired()])
+   category = StringField('Category', validators=[InputRequired(), Length(min=0, max=45)])
+   author = StringField('Author', validators=[InputRequired(), Length(min=0, max=45)])
 
 class LoginForm(FlaskForm):
    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
