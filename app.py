@@ -29,6 +29,9 @@ s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 bootstrap = Bootstrap(app)
 mysql = MySQL(app)
 
+class RemoveBookForm(FlaskForm):
+   isbn = StringField('ISBN', validators=[InputRequired(), Length(min=10, max=15)])
+
 class LoginForm(FlaskForm):
    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=80)])
@@ -128,6 +131,7 @@ def login():
                
                if results[0][9]==1:
                   session['isAdmin'] = True
+                  return redirect(url_for('manage_books'))
                else:
                   session['isAdmin'] = False
                return redirect(url_for('home'))
@@ -284,6 +288,32 @@ def change_password_load(token):
 #    form = EditForm()
 
 #    return render_template('edit_profile_2.html', form=form)
+
+@app.route("/manage_books", methods=['GET','POST'])
+def manage_books():
+   form = RemoveBookForm()
+
+
+   cur = mysql.connection.cursor()
+   cur.execute("select * from book")
+   books = cur.fetchall()
+   cur.close()
+
+   if form.validate_on_submit():
+      cur = mysql.connection.cursor()
+
+      rowcount = cur.execute("select * from book where isbn=%s", [form.isbn.data])
+
+      if rowcount > 0:
+         cur.execute("DELETE FROM book WHERE isbn=%s;",[form.isbn.data])
+         mysql.connection.commit()
+         cur.close()
+         return redirect(url_for('manage_books'))
+      else:
+         cur.close()
+         return render_template("manage.html", books=books, form=form, invalidISBN=True)
+      
+   return render_template('manage.html', books=books, form=form)
 
 @app.route("/return")
 def returnBook():
