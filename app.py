@@ -300,12 +300,22 @@ def change_password_load(token):
 @app.route("/manage_books", methods=['GET','POST'])
 def manage_books():
    form = RemoveBookForm()
-
+   form2 = AddBookForm()
 
    cur = mysql.connection.cursor()
    cur.execute("select * from book")
    books = cur.fetchall()
    cur.close()
+   if form2.validate_on_submit():
+      cur = mysql.connection.cursor()
+      try:
+         cur.execute("insert into book (isbn,author,category,title,buy_price,sell_price) values(%s, %s, %s, %s, %s, %s)", (form2.isbn.data, form2.author.data, form2.category.data, form2.title.data, form2.buy_price.data, form2.sell_price.data))
+         mysql.connection.commit()
+         cur.close()
+         return redirect(url_for('manage_books'))
+      except:
+         cur.close()
+         return render_template('manage.html', books=books, form=form, form2=form2, duplicateEntry=True)
 
    if form.validate_on_submit():
       cur = mysql.connection.cursor()
@@ -319,9 +329,9 @@ def manage_books():
          return redirect(url_for('manage_books'))
       else:
          cur.close()
-         return render_template("manage.html", books=books, form=form, invalidISBN=True)
+         return render_template("manage.html", books=books, form=form, form2=form2, invalidISBN=True)
       
-   return render_template('manage.html', books=books, form=form)
+   return render_template('manage.html', books=books, form=form, form2=form2)
 
 @app.route("/return")
 def returnBook():
