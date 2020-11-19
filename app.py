@@ -65,6 +65,12 @@ class ForgotPass(FlaskForm):
    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
 
+class SuspendUserForm(FlaskForm):
+   username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
+
+class UnsuspendUserForm(FlaskForm):
+   username = StringField('Usssername', validators=[InputRequired(), Length(min=4, max=15)])
+
 class ChangePass(FlaskForm):
    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
    newpassword = PasswordField('new password', validators=[Length(min=8, max=80)])
@@ -111,11 +117,13 @@ def home():
 def logout():
    session['user'] = None
    session['loggedIn'] = False
-   
+   session['isAdmin'] = False
    return redirect(url_for('home'))
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+   if session['loggedIn']:
+      return redirect(url_for('home'))
    form = LoginForm()
 
    if form.validate_on_submit():
@@ -126,6 +134,8 @@ def login():
       print("RESULTS")
       if rowcount > 0:
          print(results[0][2])
+         if (results[0][10]==1):
+            return '<h1>this account has been suspended.<h1>'
          if(results[0][4]==1):
             if check_password_hash(results[0][2], form.password.data):
                user = User(form.username.data)
@@ -139,7 +149,7 @@ def login():
                
                if results[0][9]==1:
                   session['isAdmin'] = True
-                  return redirect(url_for('manage_books'))
+                  return redirect(url_for('admin_page'))
                else:
                   session['isAdmin'] = False
                return redirect(url_for('home'))
@@ -299,6 +309,10 @@ def change_password_load(token):
 
 @app.route("/manage_books", methods=['GET','POST'])
 def manage_books():
+
+   if session['isAdmin'] == False:
+      return redirect(url_for('home'))
+
    form = RemoveBookForm()
    form2 = AddBookForm()
 
@@ -306,7 +320,11 @@ def manage_books():
    cur.execute("select * from book")
    books = cur.fetchall()
    cur.close()
+   if form2.validate_on_submit() and form.validate_on_submit():
+      print("madddd")
+
    if form2.validate_on_submit():
+      print("add book")
       cur = mysql.connection.cursor()
       try:
          cur.execute("insert into book (isbn,author,category,title,buy_price,sell_price) values(%s, %s, %s, %s, %s, %s)", (form2.isbn.data, form2.author.data, form2.category.data, form2.title.data, form2.buy_price.data, form2.sell_price.data))
@@ -315,9 +333,10 @@ def manage_books():
          return redirect(url_for('manage_books'))
       except:
          cur.close()
-         return render_template('manage.html', books=books, form=form, form2=form2, duplicateEntry=True)
+         return render_template('manage_books.html', books=books, form=form, form2=form2, duplicateEntry=True)
 
    if form.validate_on_submit():
+      print("remove book")
       cur = mysql.connection.cursor()
 
       rowcount = cur.execute("select * from book where isbn=%s", [form.isbn.data])
@@ -329,9 +348,9 @@ def manage_books():
          return redirect(url_for('manage_books'))
       else:
          cur.close()
-         return render_template("manage.html", books=books, form=form, form2=form2, invalidISBN=True)
+         return render_template("manage_books.html", books=books, form=form, form2=form2, invalidISBN=True)
       
-   return render_template('manage.html', books=books, form=form, form2=form2)
+   return render_template('manage_books.html', books=books, form=form, form2=form2)
 
 @app.route("/return")
 def returnBook():
@@ -344,6 +363,40 @@ def search():
 @app.route("/re_order")
 def re_order():
    return render_template('re_order.html')
+
+@app.route("/admin_page")
+def admin_page():
+   if session['isAdmin'] == False:
+      return redirect(url_for('home'))
+   return render_template('admin_page.html')
+
+@app.route("/manage_users", methods=['GET','POST'])
+def manage_users():
+
+   if session['isAdmin'] == False:
+      return redirect(url_for('home'))
+
+   form = SuspendUserForm()
+
+   cur = mysql.connection.cursor()
+   cur.execute("select * from user")
+   users = cur.fetchall()
+
+   cur.close()
+
+   if form.validate_on_submit():
+      print("suspend")
+      cur = mysql.connection.cursor()
+      cur.execute("UPDATE user SET suspended=1 where username like %s",[form.username.data])
+      mysql.connection.commit()
+      cur.close()
+      return redirect(url_for('manage_users'))
+
+
+
+   return render_template('manage_users.html', users=users, form=form)
+
+
 
 if __name__ == "__main__":
 	app.run()
