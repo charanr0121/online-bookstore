@@ -69,7 +69,7 @@ class SuspendUserForm(FlaskForm):
    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
 
 class UnsuspendUserForm(FlaskForm):
-   username = StringField('Usssername', validators=[InputRequired(), Length(min=4, max=15)])
+   unsuspend = StringField('Unsuspend Username', validators=[InputRequired(), Length(min=4, max=15)])
 
 class ChangePass(FlaskForm):
    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
@@ -378,10 +378,14 @@ def manage_users():
 
    form = SuspendUserForm()
 
-   cur = mysql.connection.cursor()
-   cur.execute("select * from user")
-   users = cur.fetchall()
+   form2 = UnsuspendUserForm()
 
+
+   cur = mysql.connection.cursor()
+   cur.execute("select * from user where suspended=0")
+   users = cur.fetchall()
+   cur.execute("select * from user where suspended=1")
+   suspendedUsers = cur.fetchall()
    cur.close()
 
    if form.validate_on_submit():
@@ -392,9 +396,17 @@ def manage_users():
       cur.close()
       return redirect(url_for('manage_users'))
 
+   if form2.validate_on_submit():
+      print("unsuspend")
+      cur = mysql.connection.cursor()
+      cur.execute("UPDATE user SET suspended=0 where username like %s",[form.unsuspend.data])
+      mysql.connection.commit()
+      cur.close()
+      return redirect(url_for('manage_users'))
 
 
-   return render_template('manage_users.html', users=users, form=form)
+
+   return render_template('manage_users.html', users=users, form=form, form2=form2, suspendedUsers=suspendedUsers)
 
 
 

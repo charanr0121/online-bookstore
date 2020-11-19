@@ -203,6 +203,65 @@
                 </div>
             </div>
         </div>
+
+        <div class="container section-bg">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="title-box">
+                    <h2 class="title">Suspended <span>List</span></h2>
+                    <table align="center"
+                        style="font-family:Courier; text-transform:none; font-size: 20px;border: 1px solid black; border-collapse: collapse">
+                        {% for user in suspendedUsers %}
+                        <tr>
+                            <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                                {{user[7]}}
+                            </td>
+                            <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                                {{user[1]}}
+                            </td>
+                            <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                                {{user[3]}}
+                            </td>
+                            <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                                {% if user[10]==1 %}
+                                    SUSPENDED    
+                                {% endif %}                                    
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="boxed">
+                    <form action="manage_users" class="contact-form" id="contactForm" method="post">
+                        <div class="row">
+                            <div class="col-sm-6" align="center">
+                                <div class="form-group">
+
+                                    {{ form2.hidden_tag() }}
+                                    {{ wtf.form_field(form2.unsuspend) }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="text-center mt20 col-sm-12">
+                                        <button type="submit" class="btn btn-robot pull-left"
+                                            id="cfsubmit">SUSPEND</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <div class="row">
             <div class="col-sm-12">
                 <div class="classic-title">
