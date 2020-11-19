@@ -113,13 +113,14 @@
                       {% if incorrectPass %}
                         <p>incorrect password</p>
                       {% endif %}
-                    </div> <!-- /.form-group -->
+                    
                   </div> <!-- /.col-sm-6 -->
                   <div class="checkbox">
                     <label>
                       {{ wtf.form_field(form.remember) }}
                     </label>
                   </div>
+                </div> <!-- /.form-group -->
                   <div class="text-center mt20 col-sm-12">
                     <button type="submit" class="btn btn-robot pull-left" id="cfsubmit">Sign in</button>
                   </div>
