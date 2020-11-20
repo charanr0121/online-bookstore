@@ -7,6 +7,7 @@ from wtforms import StringField, PasswordField, BooleanField, IntegerField
 from wtforms.validators import InputRequired, Email, Length
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import request
 import yaml
 
 app = Flask(__name__)
@@ -307,6 +308,9 @@ def change_password_load(token):
 
 #    return render_template('edit_profile_2.html', form=form)
 
+
+@app.route("manage_promos")
+
 @app.route("/manage_books", methods=['GET','POST'])
 def manage_books():
 
@@ -382,14 +386,46 @@ def manage_users():
    cur.execute("select * from user")
    users = cur.fetchall()
 
+
    cur.close()
 
    if form.validate_on_submit():
-      print("suspend")
+      
       cur = mysql.connection.cursor()
-      cur.execute("UPDATE user SET suspended=1 where username like %s",[form.username.data])
-      mysql.connection.commit()
-      cur.close()
+
+      if request.form['submit_button'] == 'suspend': 
+         print("suspend")
+         cur.execute("UPDATE user SET suspended=1 where username like %s",[form.username.data])
+         mysql.connection.commit()
+         cur.close()
+      elif request.form['submit_button'] == 'promote': 
+         print("promote")
+         cur.execute("select admin from user where username like %s",[form.username.data])
+         level = cur.fetchall()[0][0]
+
+         if level == 1:
+            level = level
+         elif level == 2:
+            level = 1
+         else:
+            level = 2
+         cur.execute("UPDATE user SET admin=" + str(level) + " where username like %s",[form.username.data])
+         mysql.connection.commit()
+         cur.close()
+      elif request.form['submit_button'] == 'demote':
+         print('demote')
+         cur.execute("select admin from user where username like %s",[form.username.data])
+         level = cur.fetchall()[0][0]
+
+         if level == 1:
+            level = 2
+         elif level == 2:
+            level = 0
+            
+         cur.execute("UPDATE user SET admin=" + str(level) + " where username like %s",[form.username.data])
+         mysql.connection.commit()
+         cur.close()
+         
       return redirect(url_for('manage_users'))
 
 
