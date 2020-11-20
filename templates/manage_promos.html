@@ -153,7 +153,31 @@
             <h2 class="title">Active <span>Promotions</span></h2>
             <table align="center"
               style="font-family:Courier; text-transform:none; font-size: 20px;border: 1px solid black; border-collapse: collapse">
-              {% for promotion in promotions %}
+
+
+              <tr>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  Id:
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  Value:
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  Restrictions:
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  End Date:
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  Status:
+                </td>
+            </tr>
+              {% for promotion in promotions %}    
               <tr>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
@@ -170,6 +194,15 @@
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
                   {{promotion[3]}}
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  {% if promotion[4]== 1 %}
+                    ACTIVE
+                    {% else %}
+                    NOT ACTIVE
+                  {% endif %}  
+
                 </td>
               </tr>
               {% endfor %}
