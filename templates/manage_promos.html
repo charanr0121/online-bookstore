@@ -137,7 +137,7 @@
           <p>
             <!-- Another line of info here -->
           </p>
-          <h1 class="header-title">Manage<br><span class="thin">Books</span></h1>
+          <h1 class="header-title">Manage<br><span class="thin">Promotions</span></h1>
         </div>
       </div>
     </div>
@@ -146,111 +146,28 @@
 
 
   <section id="product" class="product">
-    <div class="container section-bg">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="title-box">
-            <h2 class="title">Book <span>Library</span></h2>
-            <table align="center"
-              style="font-family:Courier; text-transform:none; font-size: 20px;border: 1px solid black; border-collapse: collapse">
-              {% for book in books %}
-              <tr>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{book[0]}}
-                </td>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{book[1]}}
-                </td>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{book[5]}}
-                </td>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{book[4]}}
-                </td>
-              </tr>
-              {% endfor %}
-            </table>
-          </div>
-        </div>
-        <div class="row">
-          <div class="boxed">
-            <div class="title-box">
-              <h2 class="title">Remove <span>Book</span></h2>
-            </div>
-            <form action="manage_books" class="contact-form" id="contactForm" method="post">
-              <div class="row">
-                <div class="col-sm-6" align="center">
-                  <div class="form-group">
-
-                    {% if invalidISBN %}
-                    <p>ISBN not found</p>
-                    {% endif %}
-
-                    {{ form.hidden_tag() }}
-                    {{ wtf.form_field(form.isbn) }}
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <div class="text-center mt20 col-sm-12">
-                      <button type="submit" class="btn btn-robot pull-left" id="cfsubmit">Remove</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="row">
-          <div class="boxed">
-            <div class="title-box">
-              <h2 class="title">Add <span>Book</span></h2>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="boxed">
-
-            <form action="manage_books" class="contact-form" id="contactForm" method="post">
+            <form action="manage_promos" class="contact-form" id="contactForm" method="post">
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
                     {% if duplicateEntry %}
-                    <p>Book already exists</p>
+                    <p>Promotion already exists</p>
                     {% endif %}
-                    {{ form2.hidden_tag() }}
-                    {{ wtf.form_field(form2.isbn) }}
+                    {{ form.hidden_tag() }}
+                    {{ wtf.form_field(form.value)}}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-6">
                   <div class="form-group">
-                    {{ wtf.form_field(form2.title) }}
+                    {{ wtf.form_field(form.restrictions) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-6">
                   <div class="form-group">
-                    {{ wtf.form_field(form2.author) }}
+                    {{ wtf.form_field(form.end_date) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    {{ wtf.form_field(form2.category) }}
-                  </div> <!-- /.form-group -->
-                </div> <!-- /.col-sm-6 -->
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    {{ wtf.form_field(form2.buy_price) }}
-                  </div> <!-- /.form-group -->
-                </div> <!-- /.col-sm-6 -->
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    {{ wtf.form_field(form2.sell_price) }}
-                  </div> <!-- /.form-group -->
-                </div> <!-- /.col-sm-6 -->
+
                 <div class="col-sm-6">
                   <div class="form-group">
                     <div class="text-center mt20 col-sm-12">

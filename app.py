@@ -8,6 +8,9 @@ from wtforms.validators import InputRequired, Email, Length
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import request
+from wtforms.fields.html5 import DateField
+from wtforms.validators import DataRequired
+from datetime import date
 import yaml
 
 app = Flask(__name__)
@@ -29,6 +32,14 @@ s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
 bootstrap = Bootstrap(app)
 mysql = MySQL(app)
+
+
+class AddPromotion(FlaskForm):
+   value = StringField('value', validators=[InputRequired(), Length(min=1)])
+   restrictions = StringField('restrictions', validators=[InputRequired(), Length(min=1)])
+   end_date = DateField("End date", validators=[DataRequired(message="You must enter an end date.")], format='%Y-%m-%d')
+
+
 
 class RemoveBookForm(FlaskForm):
    isbn = StringField('ISBN', validators=[InputRequired(), Length(min=10, max=15)])
@@ -309,7 +320,32 @@ def change_password_load(token):
 #    return render_template('edit_profile_2.html', form=form)
 
 
-@app.route("manage_promos")
+@app.route("/manage_promos", methods=['GET','POST'])
+def manage_promos():
+   if session['isAdmin'] == False:
+      return redirect(url_for('home'))
+
+   form = AddPromotion()
+
+
+   cur = mysql.connection.cursor()
+   cur.execute("select * from promotions")
+   promotions = cur.fetchall()
+   cur.close()
+
+   if form.validate_on_submit():
+      cur = mysql.connection.cursor()
+      print('insert promo')
+      
+      cur.execute("insert into  promotions(value,restrictions,expirationDate) values(%s, %s, %s)", (form.value.data, form.restrictions.data, form.end_date.data))
+         
+      mysql.connection.commit()
+      cur.close()
+      return redirect(url_for('manage_promos'))
+      
+
+
+   return render_template('manage_promos.html', promotions=promotions, form=form, duplicateEntry=True)
 
 @app.route("/manage_books", methods=['GET','POST'])
 def manage_books():
