@@ -44,6 +44,9 @@ class AddPromotion(FlaskForm):
 class RemoveBookForm(FlaskForm):
    isbn = StringField('ISBN', validators=[InputRequired(), Length(min=10, max=15)])
 
+class RemovePromotion(FlaskForm):
+   id = StringField('Promotion id', validators=[InputRequired(), Length(min=1)])
+
 class AddBookForm(FlaskForm):
    isbn = StringField('ISBN', validators=[InputRequired(), Length(min=10, max=15)])
    title = StringField('Title', validators=[InputRequired(), Length(min=1, max=45)])
@@ -325,13 +328,35 @@ def manage_promos():
    if session['isAdmin'] == False:
       return redirect(url_for('home'))
 
+
+   form2 = RemovePromotion()
    form = AddPromotion()
+   
 
 
    cur = mysql.connection.cursor()
    cur.execute("select * from promotions")
    promotions = cur.fetchall()
    cur.close()
+
+
+
+
+   if form2.validate_on_submit():
+      print("remove promotion")
+      cur = mysql.connection.cursor()
+
+      rowcount = cur.execute("select * from promotions where id=%s", [form2.id.data])
+
+      if rowcount > 0:
+         cur.execute("DELETE FROM promotions WHERE id=%s;",[form2.id.data])
+         mysql.connection.commit()
+         cur.close()
+         return redirect(url_for('manage_promos'))
+      else:
+         cur.close()
+         return render_template("manage_promos.html", promotions=promotions, form=form, form2=form2, invalidID=True)
+
 
    if form.validate_on_submit():
       cur = mysql.connection.cursor()
@@ -342,10 +367,9 @@ def manage_promos():
       mysql.connection.commit()
       cur.close()
       return redirect(url_for('manage_promos'))
-      
-
-
-   return render_template('manage_promos.html', promotions=promotions, form=form, duplicateEntry=True)
+   
+   
+   return render_template('manage_promos.html', promotions=promotions, form=form, form2=form2)
 
 @app.route("/manage_books", methods=['GET','POST'])
 def manage_books():

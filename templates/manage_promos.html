@@ -146,15 +146,85 @@
 
 
   <section id="product" class="product">
+    <div class="container section-bg">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="title-box">
+            <h2 class="title">Active <span>Promotions</span></h2>
+            <table align="center"
+              style="font-family:Courier; text-transform:none; font-size: 20px;border: 1px solid black; border-collapse: collapse">
+              {% for promotion in promotions %}
+              <tr>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  {{promotion[0]}}
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  {{promotion[1]}}
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  {{promotion[2]}}
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  {{promotion[3]}}
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="boxed">
+            <div class="title-box">
+              <h2 class="title">Remove <span>Promotion</span></h2>
+            </div>
+            <form action="manage_promos" class="contact-form" id="contactForm" method="post">
+              <div class="row">
+                <div class="col-sm-6" align="center">
+                  <div class="form-group">
+
+                    {% if invalidID %}
+                    <p> Promotion not found</p>
+                    {% endif %}
+
+                    {{ form.hidden_tag() }}
+                    {{ wtf.form_field(form2.id) }}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="text-center mt20 col-sm-12">
+                      <button type="submit" class="btn btn-robot pull-left" id="cfsubmit">Remove</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="boxed">
+            <div class="title-box">
+              <h2 class="title">Add <span>Book</span></h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="boxed">
+
             <form action="manage_promos" class="contact-form" id="contactForm" method="post">
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    {% if duplicateEntry %}
-                    <p>Promotion already exists</p>
-                    {% endif %}
-                    {{ form.hidden_tag() }}
-                    {{ wtf.form_field(form.value)}}
+    
+                  </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    {{ wtf.form_field(form.value) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-6">
@@ -167,9 +237,6 @@
                     {{ wtf.form_field(form.end_date) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
-
-                <div class="col-sm-6">
-                  <div class="form-group">
                     <div class="text-center mt20 col-sm-12">
                       <button type="submit" class="btn btn-robot pull-left" id="cfsubmit">Add</button>
                     </div>
@@ -211,7 +278,6 @@
     </div>
     </div>
   </section>
-
 
   <footer class="footer text-center">
     <h3> Darnes & Boble Booksellers </a></h3>
