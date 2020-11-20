@@ -3,7 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
-from wtforms import StringField, PasswordField, BooleanField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, IntegerField, DateField
 from wtforms.validators import InputRequired, Email, Length
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -75,6 +75,13 @@ class EditForm(FlaskForm):
    ccnumber = StringField('credit card number', validators=[Length(min=14, max=18)])
    currpassword = PasswordField('current password', validators=[Length(min=8, max=80)])
    newpassword = PasswordField('new password', validators=[Length(min=8, max=80)])
+
+class AddPromoForm(FlaskForm):
+   code = StringField('Promo Code', validators=[Length(min=5, max=80)])
+   value = IntegerField('Percent Off', validators=[InputRequired()])
+   expiry_date = DateField('Expiry Date')
+
+
 
 class ForgotPass(FlaskForm):
    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
@@ -322,55 +329,6 @@ def change_password_load(token):
 
 #    return render_template('edit_profile_2.html', form=form)
 
-
-@app.route("/manage_promos", methods=['GET','POST'])
-def manage_promos():
-   if session['isAdmin'] == False:
-      return redirect(url_for('home'))
-
-
-   form2 = RemovePromotion()
-   form = AddPromotion()
-   
-
-
-   cur = mysql.connection.cursor()
-   cur.execute("select * from promotions")
-   promotions = cur.fetchall()
-   cur.close()
-
-
-
-
-   if form2.validate_on_submit():
-      print("remove promotion")
-      cur = mysql.connection.cursor()
-
-      rowcount = cur.execute("select * from promotions where id=%s", [form2.id.data])
-
-      if rowcount > 0:
-         cur.execute("DELETE FROM promotions WHERE id=%s;",[form2.id.data])
-         mysql.connection.commit()
-         cur.close()
-         return redirect(url_for('manage_promos'))
-      else:
-         cur.close()
-         return render_template("manage_promos.html", promotions=promotions, form=form, form2=form2, invalidID=True)
-
-
-   if form.validate_on_submit():
-      cur = mysql.connection.cursor()
-      print('insert promo')
-      
-      cur.execute("insert into  promotions(value,restrictions,expirationDate) values(%s, %s, %s)", (form.value.data, form.restrictions.data, form.end_date.data))
-         
-      mysql.connection.commit()
-      cur.close()
-      return redirect(url_for('manage_promos'))
-   
-   
-   return render_template('manage_promos.html', promotions=promotions, form=form, form2=form2)
-
 @app.route("/manage_books", methods=['GET','POST'])
 def manage_books():
 
@@ -458,6 +416,11 @@ def manage_users():
          cur.execute("UPDATE user SET suspended=1 where username like %s",[form.username.data])
          mysql.connection.commit()
          cur.close()
+      elif request.form['submit_button'] == 'unsuspend': 
+         print("unsuspend")
+         cur.execute("UPDATE user SET suspended=0 where username like %s",[form.username.data])
+         mysql.connection.commit()
+         cur.close()
       elif request.form['submit_button'] == 'promote': 
          print("promote")
          cur.execute("select admin from user where username like %s",[form.username.data])
@@ -492,7 +455,29 @@ def manage_users():
 
    return render_template('manage_users.html', users=users, form=form)
 
+@app.route('/manage_promos', methods=['GET','POST'])
+def manage_promos():
 
+   if session['isAdmin'] == False:
+      return redirect(url_for('home'))
+
+
+   form = AddPromoForm()
+
+   cur = mysql.connection.cursor()
+   cur.execute("select * from promotion")
+   promotions = cur.fetchall()
+   cur.close()
+
+   if form.validate_on_submit():
+      print(form.expiry_date.data)
+      cur = mysql.connection.cursor()
+      cur.execute("insert into promotion (promocode,val,expiry_date) values(%s,%s,%s)", [form.code.data, form.value.data, form.expiry_date.data])
+      mysql.connection.commit()
+      cur.close()
+      return redirect(url_for('manage_promos'))
+
+   return render_template('manage_promos.html', form=form, promotions=promotions)
 
 if __name__ == "__main__":
 	app.run()

@@ -158,15 +158,11 @@
               <tr>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  Id:
+                  Code:
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
                   Value:
-                </td>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  Restrictions:
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
@@ -179,10 +175,6 @@
             </tr>
               {% for promotion in promotions %}    
               <tr>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{promotion[0]}}
-                </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
                   {{promotion[1]}}
@@ -202,7 +194,6 @@
                     {% else %}
                     NOT ACTIVE
                   {% endif %}  
-
                 </td>
               </tr>
               {% endfor %}
@@ -212,64 +203,22 @@
         <div class="row">
           <div class="boxed">
             <div class="title-box">
-              <h2 class="title">Remove <span>Promotion</span></h2>
+              <h2 class="title">Add <span>Promotion</span></h2>
             </div>
             <form action="manage_promos" class="contact-form" id="contactForm" method="post">
               <div class="row">
                 <div class="col-sm-6" align="center">
                   <div class="form-group">
 
-                    {% if invalidID %}
-                    <p> Promotion not found</p>
-                    {% endif %}
-
                     {{ form.hidden_tag() }}
-                    {{ wtf.form_field(form2.id) }}
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <div class="text-center mt20 col-sm-12">
-                      <button type="submit" class="btn btn-robot pull-left" id="cfsubmit">Remove</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="row">
-          <div class="boxed">
-            <div class="title-box">
-              <h2 class="title">Add <span>Book</span></h2>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="boxed">
-
-            <form action="manage_promos" class="contact-form" id="contactForm" method="post">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-    
-                  </div> <!-- /.form-group -->
-                </div> <!-- /.col-sm-6 -->
-                <div class="col-sm-6">
-                  <div class="form-group">
+                    {{ wtf.form_field(form.code) }}
                     {{ wtf.form_field(form.value) }}
-                  </div> <!-- /.form-group -->
-                </div> <!-- /.col-sm-6 -->
+                    {{ wtf.form_field(form.expiry_date) }}
+
+                  </div>
+                </div>
                 <div class="col-sm-6">
                   <div class="form-group">
-                    {{ wtf.form_field(form.restrictions) }}
-                  </div> <!-- /.form-group -->
-                </div> <!-- /.col-sm-6 -->
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    {{ wtf.form_field(form.end_date) }}
-                  </div> <!-- /.form-group -->
-                </div> <!-- /.col-sm-6 -->
                     <div class="text-center mt20 col-sm-12">
                       <button type="submit" class="btn btn-robot pull-left" id="cfsubmit">Add</button>
                     </div>
@@ -279,8 +228,9 @@
             </form>
           </div>
         </div>
-      </div>
-    </div>
+
+          </div>
+
     <div class="row">
       <div class="col-sm-12">
         <div class="classic-title">
