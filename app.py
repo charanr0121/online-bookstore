@@ -399,7 +399,7 @@ def manage_users():
    if form2.validate_on_submit():
       print("unsuspend")
       cur = mysql.connection.cursor()
-      cur.execute("UPDATE user SET suspended=0 where username like %s",[form.unsuspend.data])
+      cur.execute("UPDATE user SET suspended=0 where username like %s",[form2.unsuspend.data])
       mysql.connection.commit()
       cur.close()
       return redirect(url_for('manage_users'))
