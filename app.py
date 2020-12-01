@@ -474,7 +474,24 @@ def manage_promos():
       cur = mysql.connection.cursor()
       cur.execute("insert into promotion (promocode,val,expiry_date) values(%s,%s,%s)", [form.code.data, form.value.data, form.expiry_date.data])
       mysql.connection.commit()
+      cur.execute("select email from user where subscribed=1")
+      results = cur.fetchall()
+      # print(mailingList)
+      mailingList = []
+      for mail1 in results:
+         for mail2 in mail1:
+            mailingList.append(mail2)
+
+      print(mailingList)
       cur.close()
+
+      msg = Message('New Promotion!', sender="ugaonlinebookstore@gmail.com", recipients=mailingList)
+
+
+      msg.body = 'A new promotion has been added! Use promo code ' + form.code.data + ' for ' + str(form.value.data) + '% off your next purchase! Make sure you use it by ' + str(form.expiry_date.data) + '!'
+
+      mail.send(msg)
+
       return redirect(url_for('manage_promos'))
 
    return render_template('manage_promos.html', form=form, promotions=promotions)
