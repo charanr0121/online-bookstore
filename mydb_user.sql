@@ -33,6 +33,8 @@ CREATE TABLE `user` (
   `name` varchar(100) NOT NULL,
   `phone` varchar(45) DEFAULT NULL,
   `admin` int NOT NULL DEFAULT '0',
+  `suspended` int NOT NULL DEFAULT '0',
+  `subscribed` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `password_UNIQUE` (`password`),
@@ -46,7 +48,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'adminr','sha256$scsaOiNo$b2c171729ac577cbb493dcc0264b8edd2ceb92002dbf9ed6929e9067ea04ac85','cheftamillionaire@gmail.com',1,NULL,'','Admin R','7702701173',1),(2,'charanr0121','sha256$WdkUyZpJ$bf91e9dc335e3d9a8047f5df5084e4168f28ee265e33f0bf47cff97a8371c278','charanr0121@gmail.com',1,'55555555555555','4321 S Main St','Charan R','4049551708',0),(13,'charanr0121hg','sha256$8fZ4ld2q$dcb79581a4a4f5a495bbe3f712a6915d77d8b0f93b18f5991b418cccb9d6a8ae','charanr01g21@gmail.com',0,NULL,'4567 Orange Jungle Drive SW','Charan Ramachandran','4049551708',0);
+INSERT INTO `user` VALUES (1,'adminr','sha256$scsaOiNo$b2c171729ac577cbb493dcc0264b8edd2ceb92002dbf9ed6929e9067ea04ac85','cheftamillionaire@gmail.com',1,NULL,'','Admin R','7702701173',1,0,1),(2,'charanr0121','sha256$WdkUyZpJ$bf91e9dc335e3d9a8047f5df5084e4168f28ee265e33f0bf47cff97a8371c278','charanr0121@gmail.com',1,'55555555555555','4321 S Main St','Charan R','4049551708',2,0,1),(13,'charanr0121hg','sha256$8fZ4ld2q$dcb79581a4a4f5a495bbe3f712a6915d77d8b0f93b18f5991b418cccb9d6a8ae','charanr01g21@gmail.com',0,NULL,'4567 Orange Jungle Drive SW','Charan Ramachandran','4049551708',0,0,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-18 11:44:14
+-- Dump completed on 2020-12-01 19:13:50
