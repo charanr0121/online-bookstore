@@ -21,7 +21,7 @@ app.config.from_pyfile('config.cfg')
 loggedIn = False
 username = None
 
-db = yaml.load(open('db.yaml'))
+db = yaml.load(open('db.yaml'), yaml.Loader)
 app.config['MYSQL_HOST'] = db['mysql_host']
 app.config['MYSQL_USER'] = db['mysql_user']
 app.config['MYSQL_PASSWORD'] = db['mysql_password']
@@ -234,9 +234,6 @@ def users():
    cur.close()
    return render_template('users.html', userList=userList)
 
-@app.route("/books")
-def books():
-	return render_template('books.html')
 
 @app.route("/construction")
 def construction():
@@ -454,6 +451,23 @@ def manage_users():
 
 
    return render_template('manage_users.html', users=users, form=form)
+
+@app.route('/books')
+def books():
+   cur = mysql.connection.cursor()
+   cur.execute("select * from book")
+   books = cur.fetchall()
+   cur.close()
+   return render_template('books.html', books=books)
+
+@app.route('/books/<isbn>')
+def book_landing_page(isbn):
+   cur = mysql.connection.cursor()
+   cur.execute("select * from book where isbn=%s", [isbn])
+   bookInfo = cur.fetchall()
+   print(bookInfo)
+   cur.close()
+   return render_template('book_landing_page.html', bookInfo=bookInfo)
 
 @app.route('/manage_promos', methods=['GET','POST'])
 def manage_promos():

@@ -74,9 +74,9 @@
 
                 <div class="collapse navbar-collapse" id="site-nav-bar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="home">Home</a></li>
-                        <li><a href="about">About</a></li>
-                        <li><a href="books">Books</a></li>
+                        <li class="active"><a href="/home">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/books">Books</a></li>
                         <li><a href="pages.html">Pages</a></li>
                         {% if session['loggedIn'] %}
                         <li><a href="logout">Log Out</a></li>
@@ -114,8 +114,7 @@
       <div class="row">
           <div class="col-sm-12">
               <div class="title-box">
-                  <h2 class="title">Top <span>Sellers</span></h2>
-                  <a href="books" class="btn btn-default btn-robot">view all books</a>
+                  <h2 class="title">All <span>Books</span></h2>
               </div>
           </div>
       </div>
@@ -125,7 +124,7 @@
             <div class="row">
         {% endif %}
         <div class="col-sm-4">
-                <a href="construction"> <img class="img-responsive" src={{"http://covers.openlibrary.org/b/isbn/" + book[0] + ".jpg"}}> </a>
+                <a href={{ url_for("book_landing_page", isbn=book[0]) }}> <img class="img-responsive" src={{"http://covers.openlibrary.org/b/isbn/" + book[0] + ".jpg"}}> </a>
                 <h3 class="product-title">{{book[4]}}</h3>
         </div>
         {% if loop.index == 0 %}
@@ -133,26 +132,7 @@
         {% endif %}
       {% endfor %}
 
-      <div class="row">
-          <div class="col-sm-4">
-              <div class="porduct-box">
-                  <img class="img-responsive" src="{{ url_for('static', filename= 'book_covers/Percy_Jackson.jpg') }}" alt="product">
-                  <h3 class="product-title">Fantasy</h3>
-              </div>
-          </div>
-          <div class="col-sm-4">
-              <div class="porduct-box">
-                  <img class="img-responsive" src="{{ url_for('static', filename= 'book_covers/Harry_Potter.jpg') }}" alt="product">
-                  <h3 class="product-title">Adventure</h3>
-              </div>
-          </div>
-          <div class="col-sm-4">
-              <div class="porduct-box">
-                  <img class="img-responsive" src="{{ url_for('static', filename= 'book_covers/Curious_G.jpg') }}" alt="product">
-                  <h3 class="product-title">For Kids</h3>
-              </div>
-          </div>
-      </div>
+
       <div class="row">
           <div class="col-sm-12">
               <div class="classic-title">
@@ -184,27 +164,6 @@
   </div>
 </section>
 
-   <div id=section1>
-     <div id= content>
-       {% if session['loggedIn'] %}
-       <h2>Hi {{session['user']}}</h2>
-        {% if session['isAdmin'] %}
-        <h2>ADMIN</h2>
-        {% endif %}
-       {% endif %}
-      <h2>Featured Books</h2>
-
-    
-       <a href="edit_profile">DEMO EDIT PROFILE</a>
-       <br>
-       <a href="return">DEMO return</a>
-
-       <a href="search">DEMO Search</a>
-       <a href="re_order">DEMO Re-order</a>
-        
-      </main> 
-    
-    </div>
     <footer class="footer text-center">
         <h3> Darnes & Boble Booksellers </a></h3>
     </footer>
