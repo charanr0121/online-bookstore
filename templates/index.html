@@ -125,7 +125,7 @@
             <div class="row">
         {% endif %}
         <div class="col-sm-4">
-                <a href="construction"> <img class="img-responsive" src={{"http://covers.openlibrary.org/b/isbn/" + book[0] + ".jpg"}}> </a>
+                <a href={{ url_for("book_landing_page", isbn=book[0]) }}> <img class="img-responsive" src={{"http://covers.openlibrary.org/b/isbn/" + book[0] + ".jpg"}}> </a>
                 <h3 class="product-title">{{book[4]}}</h3>
         </div>
         {% if loop.index == 0 %}
