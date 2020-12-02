@@ -1,0 +1,137 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Bookstore</title>
+
+    <!-- google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- files -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/magnific-popup.css" rel="stylesheet">
+    <link href="assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="assets/css/owl.carousel.theme.min.css" rel="stylesheet">
+    <link href="assets/css/ionicons.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Bookstore Header -->
+    <div class="site-header-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="index.php"><img src="assets/images/book_logo.png" alt="logo"></a>
+                </div>
+                <div class="col-sm-3 col-sm-offset-3 text-right">
+                    <span class="ion-android-cart"></span> 0 books
+                    <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default btn-robot" type="button">Search</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Header -->
+
+<section id="header" class="main-header">
+    <div class="container">
+
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="site-nav-bar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.php">Home</a></li>
+                        <li class="active"><a href="about.html">About</a></li>
+                        <li><a href="shop.php">Shop</a></li>
+                        <li><a href="view_profile.php">view profile</a></li>
+                           <?php if (isset($_SESSION['user'])) {
+                         echo('<li><a href="logout.php">Logout</a></li>');
+                        } else {
+                          echo( '<li><a href="login.php">Login</a></li>');
+                        }
+                        ?>
+                           
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="intro row">
+            <div class="overlay"></div>
+            <div class="col-sm-6 col-sm-offset-6">
+                <h2 class="header-quote">About Page</h2>
+                <p>
+                    Learn more about us.
+                </p>
+                <h1 class="header-title">Book<br><span class="thin">Store</span></h1>
+            </div>
+        </div>
+    </div>
+    <div class="nutral">
+    </div>
+</section>
+
+<section id="product" class="product">
+    <div class="container section-bg">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="title-box">
+            <h2 class="title">Our<span> Mission</span></h2>
+          </div>
+        </div>
+        </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="p-large">
+            We are the world’s largest retail bookseller and a leading retailer of content, digital media and educational products. 
+              We want to help  both customers and booksellers reach their aspirations, while being a credit to the communities we serve.
+              For 12 years in a row, WE have earned the top rating of 100 percent in the Corporate Equality Index, 
+              an annual survey administered by the Human Rights Campaign Foundation.
+         </p>
+        </div>
+    </div>
+
+<div class="row">
+        <div class="col-sm-12">
+          <div class="title-box">
+            <h2 class="title">What We Offer<span></span> </h2>
+          </div>
+        </div>
+        </div>
+    
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="p-large">
+                The main objective of the project is to create an online book store that allows users to search and purchase a book online based on title, author and subject. 
+                The user can order their books online through credit card payment. Through a web browser the customers can search for a book by its title or author, 
+                later can add to the shopping cart and finally purchase. The user can login using his account details or new customers can set up an account. 
+                They should give the details of their name, contact number and shipping address.The books are divided into many categories based on subject.
+         </p>
+        </div>
+    </div>
+</section>
+
+
+
