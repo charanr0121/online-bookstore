@@ -47,6 +47,9 @@ class RemoveBookForm(FlaskForm):
 class RemovePromotion(FlaskForm):
    id = StringField('Promotion id', validators=[InputRequired(), Length(min=1)])
 
+class SubForm(FlaskForm):
+   username = StringField('Username', validators=[Length(min=0, max=100)])
+
 class AddBookForm(FlaskForm):
    isbn = StringField('ISBN', validators=[InputRequired(), Length(min=10, max=15)])
    title = StringField('Title', validators=[InputRequired(), Length(min=1, max=45)])
@@ -252,6 +255,7 @@ def edit_profile():
    nameform = NameForm()
    addressform = AddressForm()
    passform = PassForm()
+   subform = SubForm()
    ccnumberform = CCNumberForm()
 
    if nameform.validate_on_submit():
@@ -268,8 +272,23 @@ def edit_profile():
       cur.close()
       return redirect(url_for("edit_profile"))
 
+   if subform.validate_on_submit():
+      cur = mysql.connection.cursor()
+
+      if request.form['submit_button'] == 'subscribe':
+         cur.execute("update user set subscribed=1 where username=%s",[session['user']])
+         mysql.connection.commit()
+         cur.close()
+         return redirect(url_for("edit_profile"))
+      elif request.form['submit_button'] == 'unsubscribe':
+         cur.execute("update user set subscribed=0 where username=%s",[session['user']])
+         mysql.connection.commit()
+         cur.close()
+         return redirect(url_for("edit_profile"))
+
    if passform.validate_on_submit():
       cur = mysql.connection.cursor()
+
       cur.execute("select * from user where username=%s",[session['user']])
       results = cur.fetchall()
       if check_password_hash(results[0][2], passform.currpassword.data):
@@ -298,7 +317,7 @@ def edit_profile():
    info = cur.fetchall()
    cur.close()
 
-   return render_template('edit_profile.html', nameform=nameform, ccnumberform=ccnumberform, addressform=addressform, passform=passform, info=info)
+   return render_template('edit_profile.html', nameform=nameform, subform=subform, ccnumberform=ccnumberform, addressform=addressform, passform=passform, info=info)
 
 # def edit_profile():
 #    form = EditForm()

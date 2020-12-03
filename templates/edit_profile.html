@@ -177,6 +177,28 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="boxed">
+            <form action="edit_profile" class="contact-form" id="contactForm" method="post">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    {{ subform.hidden_tag() }}
+
+                    {% if info[0][11] == 0 %}
+                    <button type="submit" class="btn btn-robot pull-left"
+                                                  id="cfsubmit" name="submit_button" value="subscribe" style= "margin-right: 2em;">Subscribe to our mailing list!</button>
+                    {% else %}
+                    <button type="submit" class="btn btn-robot pull-left"
+                                                  id="cfsubmit" name="submit_button" value="unsubscribe" style= "margin-right: 2em;">Unsubscribe from mailing list.</button>
+                    {% endif %}
+                  </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+              </div>
+            </form>
+          </div>
+        </div>
+
 
         <!-- Footer -->
         <footer class="footer text-center">
