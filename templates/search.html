@@ -1,66 +1,196 @@
-
-
-
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="main.css">
-    <link rel="shortcut icon"href="favicon.ico">
-  </head>
+<html>
 
-  <header>
-    <div id = header>
-      <img src="{{ url_for('static', filename= 'css/FAVPNG_book-reading-clip-art_HDRQJKvs.png') }}">
+  <!DOCTYPE html>
+  <html lang="en" dir="ltr">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-   <h3><em>Books</em></h3>
-    
-   <h4>Find the best books for you</h4>
-  </div>
-   <nav id = "nav_menu">
-    <ul>
-      <li ><a id="nav_link" href="home">Home</a></li>
-      <li><a href="strength.html">Adventure</a></li>
-      <li><a href="cardio_exercises.html">Fiction</a></li>
-      <li><input type="text" placeholder="Search.."></li>
-      <li><a href= "login">Log In</a></li>
-  </nav>
+      <title>Bookstore</title>
 
 
+       <!-- google fonts -->
+       <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+       <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 
-<form action="action_page.php" style="border:1px solid #ccc">
-    <div class="container">
-      <h1>Search</h1>
-      <p>Please filter information.</p>
-      <hr>
-  
-      <label for="email"><b>Author</b></label>
-      <input type="text" placeholder="Author" name="email" required>
-  
-      <label for="psw"><b>ISBN</b></label>
-      <input type="text" placeholder="ISBN" name="psw" required>
-  
-      <label for="psw-repeat"><b>Year Published</b></label>
-      <input type="text" placeholder="Year Published" name="psw-repeat" required>
-
-<br>
-      <label for="psw-repeat"><b>Title</b></label>
-      <input type="text" placeholder="Title" name="psw-repeat" required>
-<br>
-      <label for="psw-repeat"><b>Max Price</b></label>
-      <input type="text" placeholder="Max Price" name="psw-repeat" required>
-
-      <label for="psw-repeat"><b>Category</b></label>
-      <input type="text" placeholder="Category" name="psw-repeat" required>
-
-     
-      <div class="clearfix">
-        <button type="button" class="cancelbtn">Cancel</button>
+       <!-- CSS files -->
+       <link href="{{url_for('static', filename= 'css/bootstrap.min.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/magnific-popup.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/owl.carousel.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/owl.carousel.theme.min.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/ionicons.css') }}" rel="stylesheet">
+       <link href="{{url_for('static', filename= 'css/main.css') }}" rel="stylesheet">
        
-      </div>
-    </div>
-  </form>
+       
+   
+      <link rel="shortcut icon"href="favicon.ico">
 
-  <footer> 
-    <p id="copyright">&copy; 2019 Shape Up!</p>  
-  </footer>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+      <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+    </head>
+
+<body>
+	 <!-- Bookstore Header -->
+	 <div class="site-header-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a href="index.php"><img src="assets/images/book_logo.png" alt="logo"></a>
+                    </div> 
+                    <div class="col-sm-3 col-sm-offset-3 text-right">
+                        <span class="ion-android-cart"></span> 
+                        <form action="search.php" method="POST">
+                        <div class="input-group">
+                        <input name="isbn" id="search_info" type="text" class="form-control" placeholder="">
+                        <span class="input-group-btn">
+                        <button name="url" value="shop.php" class="btn btn-default btn-robot" type="submit">ISBN</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Header -->
+
+        <section id="header" class="main-header">
+            <div class="container">
+
+                <div class="row">
+                    <nav class="navbar navbar-default">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="site-nav-bar">
+                            <ul class="nav navbar-nav">
+                                <li ><a href="index.html">Home</a></li>
+                                <li ><a href="about.html">About</a></li>
+                                <li class="active"><a href="shop.php">Shop</a></li>
+                                <li><a href="edit_profile.html">view profile</a></li>                                  
+                                <li><a href="login.html">Login</a></li>                  
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+		</section>
+		
+
+
+
+
+<section id="product" class="product">
+    <div class="container section-bg">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="title-box">
+            <h2 class="title"> Search</h2> <span>Library</span></h2>
+          </div>
+
+          <div class="col-sm-8">
+            <form action="" method="GET">
+            <div class="input-group">
+            <input name="isbn" id="search_info" type="text" class="form-control" placeholder="">
+            <span class="input-group-btn">
+            <button name="url" value="shop.php" class="btn btn-default btn-robot" type="submit">ISBN</button>
+            </form>
+            </div>
+            
+            <table align="center"
+			  style="font-family:Courier; text-transform:none; font-size: 20px;border: 1px solid black; border-collapse: collapse">
+			  				<tr>
+
+							  <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Cover:
+                                </td>
+                                <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">ISBN:
+                                </td>
+                                <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Author:
+                            
+                                </td>
+                                <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Title:
+                                </td>
+
+                                <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Category:
+                                </td>
+                                
+                                <td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Buy Price:
+								</td>
+								<td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Sell Price:
+								</td>
+								<td align="left"
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Add to Cart:
+                                </td>
+                            </tr>
+              
+              <tr>
+
+			  <td align="left"
+				  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+				  
+				  
+				  
+				  <p> Picture </p>
+				  
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                 
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                 
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  
+                </td>
+                <td align="left"
+                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+                  <form action="add_to_cart.php" method="POST">
+                    <input type="hidden" name="isbn" value='isbn'>
+                    <input type="hidden" name="id" value='id'>
+                    <input type="submit" value="Add to Cart" style="font-size: 10px;">
+                    </form>
+                </td>  
+              </tr>
+            
+            </table>
+            <div class="text-center mt20 col-sm-12">
+            <form action="view_cart.php">
+                    <button type="submit" class="btn btn-robot pull-left" id="cfsubmit" style="margin-bottom: 2em; margin-top: 3em; ">Checkout</button>
+                </form>
+                  </div>
+          </div>
+          
+    </div>
+    
+</section>
+</body>
+</html>
