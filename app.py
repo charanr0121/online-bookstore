@@ -246,6 +246,10 @@ def users():
    cur.close()
    return render_template('users.html', userList=userList)
 
+@app.route("/about")
+def about():
+   return render_template('about.html')
+
 
 @app.route("/construction")
 def construction():
