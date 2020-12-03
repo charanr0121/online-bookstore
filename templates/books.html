@@ -74,11 +74,12 @@
 
                 <div class="collapse navbar-collapse" id="site-nav-bar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/home">Home</a></li>
+                        <li><a href="/home">Home</a></li>
                         <li><a href="/about">About</a></li>
-                        <li><a href="/books">Books</a></li>
+                        <li class="active"><a href="/books">Books</a></li>
                         <li><a href="pages.html">Pages</a></li>
                         {% if session['loggedIn'] %}
+                        <li><a href="edit_profile">Profile</a></li>
                         <li><a href="logout">Log Out</a></li>
                         {% else %}
                         <li><a href= "login">Log In</a></li>

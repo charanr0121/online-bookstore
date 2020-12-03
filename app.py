@@ -69,12 +69,18 @@ class RegisterForm(FlaskForm):
    ccnumber = StringField('credit card number', validators=[])
    address = StringField('address', validators=[])
 
-class EditForm(FlaskForm):
-   address = StringField('address', validators=[Length(min=2, max=80)])
-   name = StringField('full name', validators=[Length(min=1, max=100)])
-   ccnumber = StringField('credit card number', validators=[Length(min=14, max=18)])
-   currpassword = PasswordField('current password', validators=[Length(min=8, max=80)])
-   newpassword = PasswordField('new password', validators=[Length(min=8, max=80)])
+class NameForm(FlaskForm):
+      name = StringField('full name', validators=[InputRequired(), Length(min=1, max=100)])
+
+class AddressForm(FlaskForm):
+      address = StringField('address', validators=[InputRequired(), Length(min=2, max=80)])
+
+class CCNumberForm(FlaskForm):
+      ccnumber = StringField('credit card number', validators=[InputRequired(), Length(min=14, max=18)])
+
+class PassForm(FlaskForm):
+   currpassword = PasswordField('current password', validators=[InputRequired(), Length(min=8, max=80)])
+   newpassword = PasswordField('new password', validators=[InputRequired(), Length(min=8, max=80)])
 
 class AddPromoForm(FlaskForm):
    code = StringField('Promo Code', validators=[Length(min=5, max=80)])
@@ -241,34 +247,88 @@ def construction():
 
 @app.route("/edit_profile", methods=['GET', 'POST'])
 def edit_profile():
-   form = EditForm()
+   if session['loggedIn'] == False:
+      return redirect(url_for('login'))
+   nameform = NameForm()
+   addressform = AddressForm()
+   passform = PassForm()
+   ccnumberform = CCNumberForm()
 
-   if form.validate_on_submit():
+   if nameform.validate_on_submit():
       cur = mysql.connection.cursor()
-      hashedPassword = generate_password_hash(form.newpassword.data, method='sha256')
-      cur.execute("""
-         UPDATE user
-         SET address=%s, name=%s, ccnumber=%s, password=%s
-         WHERE username=%s
-      """, (form.address.data, form.name.data, form.ccnumber.data,hashedPassword, session['user']))
-
-      cur.execute("select * from user where username=%s",[session['user']])
-      results = cur.fetchall()
-      emailAddress = results[0][3]
+      cur.execute("update user set name=%s where username=%s", (nameform.name.data, session['user']))
       mysql.connection.commit()
       cur.close()
+      return redirect(url_for("edit_profile"))
 
-      print(emailAddress)
-      msg = Message('Profile Changed', sender="ugaonlinebookstore@gmail.com", recipients=[emailAddress])
+   if addressform.validate_on_submit():
+      cur = mysql.connection.cursor()
+      cur.execute("update user set address=%s where username=%s", (addressform.address.data, session['user']))
+      mysql.connection.commit()
+      cur.close()
+      return redirect(url_for("edit_profile"))
+
+   if passform.validate_on_submit():
+      cur = mysql.connection.cursor()
+      cur.execute("select * from user where username=%s",[session['user']])
+      results = cur.fetchall()
+      if check_password_hash(results[0][2], passform.currpassword.data):
+         hashedPassword = generate_password_hash(passform.newpassword.data, method='sha256')
+
+         cur.execute("update user set password=%s where username=%s", (hashedPassword, session['user']))
+      mysql.connection.commit()
+      cur.close()
+      return redirect(url_for("edit_profile"))
+
+   if ccnumberform.validate_on_submit():
+      cur = mysql.connection.cursor()
+      cur.execute("update user set ccnumber=%s where username=%s", (ccnumberform.ccnumber.data, session['user']))
+      mysql.connection.commit()
+      cur.close()
+      return redirect(url_for("edit_profile"))
+      # elif request.form['submit-button'] == 'change-pass':
+
+      # elif request.form['submit-button'] == 'change-address':
+
+      # elif request.form['submit-button'] == 'change-ccnumber':
 
 
-      msg.body = 'Your profile has been updated.'
+   cur = mysql.connection.cursor()
+   cur.execute("select * from user where username=%s", [session['user']])
+   info = cur.fetchall()
+   cur.close()
 
-      mail.send(msg)
+   return render_template('edit_profile.html', nameform=nameform, ccnumberform=ccnumberform, addressform=addressform, passform=passform, info=info)
 
-      return render_template('edit_profile.html', form=form, loggedIn=loggedIn, username=username, profileChanged=True)
+# def edit_profile():
+#    form = EditForm()
 
-   return render_template('edit_profile.html', form=form, loggedIn=loggedIn, username=username)
+#    if form.validate_on_submit():
+#       cur = mysql.connection.cursor()
+#       hashedPassword = generate_password_hash(form.newpassword.data, method='sha256')
+#       cur.execute("""
+#          UPDATE user
+#          SET address=%s, name=%s, ccnumber=%s, password=%s
+#          WHERE username=%s
+#       """, (form.address.data, form.name.data, form.ccnumber.data,hashedPassword, session['user']))
+
+#       cur.execute("select * from user where username=%s",[session['user']])
+#       results = cur.fetchall()
+#       emailAddress = results[0][3]
+#       mysql.connection.commit()
+#       cur.close()
+
+#       print(emailAddress)
+#       msg = Message('Profile Changed', sender="ugaonlinebookstore@gmail.com", recipients=[emailAddress])
+
+
+#       msg.body = 'Your profile has been updated.'
+
+#       mail.send(msg)
+
+#       return render_template('edit_profile.html', form=form, loggedIn=loggedIn, username=username, profileChanged=True)
+
+#    return render_template('edit_profile.html', form=form, loggedIn=loggedIn, username=username)
 
 @app.route("/forgot_password", methods=['GET', 'POST']) #page with form that asks for user and email
 def forgot_password():
@@ -300,7 +360,6 @@ def change_password():
    form = ChangePass()
    if form.validate_on_submit():
       cur = mysql.connection.cursor()
-      print("HHHHHH")
       hashedPassword = generate_password_hash(form.newpassword.data, method='sha256')
       rowcount = cur.execute("select * from user where username like %s", [form.username.data])
       if rowcount > 0:
