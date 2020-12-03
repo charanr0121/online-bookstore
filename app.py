@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Secret!'
 app.config.from_pyfile('config.cfg')
 
-loggedIn = False
+# loggedIn = False
 username = None
 
 db = yaml.load(open('db.yaml'), yaml.Loader)
@@ -138,8 +138,6 @@ class User():
 @app.route("/")
 @app.route("/home")
 def home():
-   print(loggedIn)
-   print(username)
    
    searchform = SearchForm()
 
@@ -158,7 +156,7 @@ def logout():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-   if session['loggedIn']:
+   if 'loggedIn' in session and session['loggedIn']:
       return redirect(url_for('home'))
    form = LoginForm()
 
@@ -255,7 +253,7 @@ def construction():
 
 @app.route("/edit_profile", methods=['GET', 'POST'])
 def edit_profile():
-   if session['loggedIn'] == False:
+   if 'loggedIn' not in session or session['loggedIn'] == False:
       return redirect(url_for('login'))
    nameform = NameForm()
    addressform = AddressForm()
@@ -412,7 +410,7 @@ def change_password_load(token):
 @app.route("/manage_books", methods=['GET','POST'])
 def manage_books():
 
-   if session['isAdmin'] == False:
+   if 'isAdmin' not in session or session['isAdmin'] == False:
       return redirect(url_for('home'))
 
    form = RemoveBookForm()
@@ -481,14 +479,14 @@ def re_order():
 
 @app.route("/admin_page")
 def admin_page():
-   if session['isAdmin'] == False:
+   if 'isAdmin' not in session or session['isAdmin'] == False:
       return redirect(url_for('home'))
    return render_template('admin_page.html')
 
 @app.route("/manage_users", methods=['GET','POST'])
 def manage_users():
 
-   if session['isAdmin'] == False:
+   if 'isAdmin' not in session or session['isAdmin'] == False:
       return redirect(url_for('home'))
 
    form = SuspendUserForm()
@@ -568,7 +566,7 @@ def book_landing_page(isbn):
 @app.route('/manage_promos', methods=['GET','POST'])
 def manage_promos():
 
-   if session['isAdmin'] == False:
+   if 'isAdmin' not in session or session['isAdmin'] == False:
       return redirect(url_for('home'))
 
 
