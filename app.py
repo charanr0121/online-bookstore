@@ -13,6 +13,7 @@ from wtforms.validators import DataRequired
 from datetime import date
 import yaml
 
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'Secret!'
@@ -33,6 +34,10 @@ s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 bootstrap = Bootstrap(app)
 mysql = MySQL(app)
 
+
+
+class AddToCartForm(FlaskForm):
+   isbn=StringField()
 
 class AddPromotion(FlaskForm):
    value = StringField('value', validators=[InputRequired(), Length(min=1)])
@@ -147,6 +152,12 @@ def home():
    cur.close()
    return render_template('index.html', books=results, searchform=searchform)
 
+
+@app.route('/addToCart', methods=['GET', 'POST'])
+def addToCart():
+  print(request.form['isbn'])
+  return redirect(request.referrer)
+
 @app.route("/logout")
 def logout():
    session['user'] = None
@@ -249,6 +260,15 @@ def users():
 @app.route("/about")
 def about():
    return render_template('about.html')
+
+
+@app.route("/shop", methods=['GET', 'POST'])
+def shop():
+   cur = mysql.connection.cursor()
+   cur.execute("select * from book")
+   books = cur.fetchall()
+   cur.close()
+   return render_template('shop.html', books= books)
 
 
 @app.route("/construction")
