@@ -42,11 +42,11 @@
               </div>
               <div class="col-sm-3 col-sm-offset-3 text-right">
                 <span class="iconify" data-icon="ion-md-cart" data-inline="false"></span> 0 books
-                <form>
+                <form method="GET" action="/search">
                       <div class="input-group">
-                          <input type="text" class="form-control" placeholder="">
+                          <input type="text" class="form-control" name="search-query" placeholder="search here">
                           <span class="input-group-btn">
-                              <button class="btn btn-default btn-robot" type="button">Search</button>
+                              <button class="btn btn-default btn-robot" type="submit">Search</button>
                           </span>
                       </div>
                   </form>

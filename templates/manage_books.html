@@ -68,27 +68,26 @@
   <!-- Bookstore Header -->
   <div class="site-header-bg">
     <div class="container">
-      <div class="row">
-        <div class="col-sm-6">
-          <a href="home">
-            <a href="home"><img width=250px src="{{ url_for('static', filename= 'site_images/book_logo.png') }}"
-                alt="logo"></a>
-          </a>
-        </div>
-        <div class="col-sm-3 col-sm-offset-3 text-right">
-          <span class="iconify" data-icon="ion-md-cart" data-inline="false"></span> 0 books
-          <form>
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="">
-              <span class="input-group-btn">
-                <button class="btn btn-default btn-robot" type="button">Search</button>
-              </span>
+        <div class="row">
+            <div class="col-sm-6">
+              <a href="home">
+                <a href="home"><img width=250px src="{{ url_for('static', filename= 'site_images/book_logo.png') }}" alt="logo"></a>
+              </a>
             </div>
-          </form>
+            <div class="col-sm-3 col-sm-offset-3 text-right">
+              <span class="iconify" data-icon="ion-md-cart" data-inline="false"></span> 0 books
+              <form method="GET" action="/search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search-query" placeholder="search here">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn-robot" type="submit">Search</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
   <!-- Header -->
 
 

@@ -39,7 +39,8 @@ class AddPromotion(FlaskForm):
    restrictions = StringField('restrictions', validators=[InputRequired(), Length(min=1)])
    end_date = DateField("End date", validators=[DataRequired(message="You must enter an end date.")], format='%Y-%m-%d')
 
-
+class SearchForm(FlaskForm):
+   query = StringField('Search by title, ISBN, author, etc.', validators=[InputRequired(), Length(min=1)])
 
 class RemoveBookForm(FlaskForm):
    isbn = StringField('ISBN', validators=[InputRequired(), Length(min=10, max=15)])
@@ -133,16 +134,20 @@ class User():
       
       
 
+
 @app.route("/")
 @app.route("/home")
 def home():
    print(loggedIn)
    print(username)
+   
+   searchform = SearchForm()
+
    cur = mysql.connection.cursor()
    rowcount = cur.execute("select * from book")
    results = cur.fetchall()
    cur.close()
-   return render_template('index.html', books=results)
+   return render_template('index.html', books=results, searchform=searchform)
 
 @app.route("/logout")
 def logout():
@@ -453,9 +458,22 @@ def manage_books():
 def returnBook():
    return render_template('return.html')
 
-@app.route("/search")
+@app.route("/search", methods=['GET', 'POST'])
 def search():
-   return render_template('search.html')
+   # searchform = SearchForm()
+   print("JERE")
+   if request.method == "GET":
+      print(request.args)
+      print(request.args['search-query'])
+      print("JERE2")
+      cur = mysql.connection.cursor()
+      queryString = '%' + request.args['search-query'] + '%'
+      print(queryString)
+      cur.execute("select * from book where (isbn like %s or title like %s or category like %s or author like %s)", [queryString,queryString,queryString,queryString])
+      searchResults = cur.fetchall()
+      print(searchResults)
+
+   return render_template('search.html', searchResults=searchResults)
 
 @app.route("/re_order")
 def re_order():
