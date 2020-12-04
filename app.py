@@ -12,6 +12,7 @@ from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired
 from datetime import date
 import yaml
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -311,7 +312,7 @@ def about():
    return render_template('about.html')
 
 
-@app.route("/checkout")
+@app.route("/checkout", methods=['GET', 'POST'])
 def checkout():
    cur = mysql.connection.cursor()
    cur.execute("select * from pendingOrder where user=%s", [session['user']])
@@ -338,7 +339,40 @@ def shop():
 def construction():
    return render_template('construction.html')
 
-@app.route("/view_cart")
+@app.route("/confirmation", methods=['GET', 'POST'])
+def confirmation():
+   
+   id = ""
+   cur = mysql.connection.cursor()
+   cur.execute("select * from pendingOrder where user=%s", [session['user']])
+   cart = cur.fetchall()
+   totalPrice = 0
+   
+   print("here: " , ord(session['user'][0]))
+   for char in session['user']:
+      id += str(ord(char))
+
+
+   now = datetime.now()
+   formatted_date = now.strftime('%Y-%m-%d %H:%M:%S')
+   id += formatted_date
+   print(id)
+   for book in cart:
+      totalPrice += book[3]
+     
+      cur.execute("insert into completedOrder (id,user, isbn, date, qty, total) values(%s,%s,%s,%s,%s,%s)", ( id,book[0], book[1], formatted_date, book[2],book[3]))
+      mysql.connection.commit()
+      
+   
+   cur.execute("DELETE FROM pendingOrder WHERE user=%s;", [session['user']])
+   mysql.connection.commit()
+   cur.close()
+   session['cartQty'] = 0
+
+
+   return render_template('confirmation.html', cart=cart, totalPrice=totalPrice)
+
+@app.route("/view_cart" , methods=['GET', 'POST'])
 def view_cart():
 
    cur = mysql.connection.cursor()
