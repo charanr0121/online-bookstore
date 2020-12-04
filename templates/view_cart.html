@@ -45,7 +45,9 @@
             </div>
             <div class="col-sm-3 col-sm-offset-3 text-right">
               <span class="iconify" data-icon="ion-md-cart" data-inline="false"></span> 
+
               <a href="/view_cart">{{session['cartQty']}} books</a>
+
               <form method="GET" action="/search">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search-query" placeholder="search here">
@@ -101,7 +103,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="title-box">
-            <h2 class="title"> Search</h2> <span>Library</span></h2>
+            <h2 class="title"> My</h2> <span>Cart</span></h2>
           </div>
             
             <table align="center"
@@ -114,29 +116,19 @@
                                 <td align="left"
                                 style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">ISBN:
                                 </td>
-                                <td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Author:
-                            
-                                </td>
-                                <td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Title:
-                                </td>
-
-                                <td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Category:
-                                </td>
+    
                                 
                                 <td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Buy Price:
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Qty:
 								</td>
 								<td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Sell Price:
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Price:
 								</td>
 								<td align="left"
                                 style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Add to Cart:
                                 </td>
                             </tr>
-          {%for book in searchResults %}
+          {%for book in cart %}
                 
               <tr>
 
@@ -144,27 +136,12 @@
 				  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
 				  
 				  
-				  <a href={{ url_for("book_landing_page", isbn=book[0]) }}> <img class="img-responsive" src={{"http://covers.openlibrary.org/b/isbn/" + book[0] + ".jpg"}}> </a>
+				  <a href={{ url_for("book_landing_page", isbn=book[0]) }}> <img class="img-responsive" src={{"http://covers.openlibrary.org/b/isbn/" + book[1] + ".jpg"}}> </a>
 				  
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{ book[0] }}
-                </td>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{ book[5] }}
-
-                </td>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
                   {{ book[1] }}
-
-                </td>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{ book[4] }}
-
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
@@ -173,22 +150,22 @@
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{ book[3] }}
-
+                  <b>${{ book[3] }}</b>
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  <form action="/addToCart" method="POST">
-                    <input type="hidden" name="isbn" value= {{book[0]}}>
-                    <input type="submit" value="Add to Cart" style="font-size: 10px;">
+                  <form action="/removeFromCart" method="POST">
+                    <input type="hidden" name="isbn" value= {{book[1]}}>
+                    <input type="submit" value="Remove from Cart" style="font-size: 10px;">
                     </form>
                 </td>  
               </tr>
               {% endfor %}
-
             </table>
             <div class="text-center mt20 col-sm-12">
             <form action="view_cart.php">
+                <b>              Total price: {{ totalPrice }}
+                </b>
                     <button type="submit" class="btn btn-robot pull-left" id="cfsubmit" style="margin-bottom: 2em; margin-top: 3em; ">Checkout</button>
                 </form>
                   </div>

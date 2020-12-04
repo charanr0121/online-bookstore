@@ -59,8 +59,8 @@ class SubForm(FlaskForm):
 class AddBookForm(FlaskForm):
    isbn = StringField('ISBN', validators=[InputRequired(), Length(min=10, max=15)])
    title = StringField('Title', validators=[InputRequired(), Length(min=1, max=45)])
-   buy_price = IntegerField('Buy Price', validators=[InputRequired()])
    sell_price = IntegerField('Sell Price', validators=[InputRequired()])
+   min_threshold = IntegerField('Quantity', validators=[InputRequired()])
    category = StringField('Category', validators=[InputRequired(), Length(min=0, max=45)])
    author = StringField('Author', validators=[InputRequired(), Length(min=0, max=45)])
 
@@ -152,21 +152,70 @@ def home():
    cur.close()
    return render_template('index.html', books=results, searchform=searchform)
 
+@app.route('/removeFromCart', methods=['GET','POST'])
+def removeFromCart():
+   session['cartQty'] -= 1
+   cur = mysql.connection.cursor()
+   cur.execute("select * from book where isbn=%s", [request.form['isbn']])
+   res = cur.fetchall()
+   print("DD")
+   print(request.form['isbn'])
+   print(res)
+   bookPrice = res[0][3]
+
+   cur.execute("select * from pendingOrder where (user=%s and isbn=%s)", [session['user'], request.form['isbn']])
+   book = cur.fetchall()
+   if book[0][2] == 1: #if qty is 1
+      cur.execute("DELETE FROM pendingOrder WHERE (user=%s and isbn=%s);",[session['user'], request.form['isbn']])
+   else:
+      cur.execute("update pendingOrder set qty=%s where (user=%s and isbn=%s)", [ book[0][2]-1, session['user'], request.form['isbn']])
+      cur.execute("update pendingOrder set total=%s where (user=%s and isbn=%s)", [ book[0][3] - bookPrice, session['user'], request.form['isbn']])
+   mysql.connection.commit()
+   cur.close()
+   return redirect(url_for("view_cart"))
+
+
+
 
 @app.route('/addToCart', methods=['GET', 'POST'])
 def addToCart():
-  print(request.form['isbn'])
-  return redirect(request.referrer)
+   session['cartQty'] += 1
+   print(request.form['isbn'])
+   cur = mysql.connection.cursor()
+   cur.execute("select * from book where isbn=%s", [request.form['isbn']])
+   res = cur.fetchall()
+   price = res[0][3]
+   print(res)
+   if res[0][10] <= 0:
+      return redirect(request.referrer)
+   rowcount = cur.execute("select * from pendingOrder where (user=%s and isbn=%s)", [session['user'], request.form['isbn']])
+   if rowcount == 0: #generate new orderID
+   #    session['orderID'] = 
+      cur.execute("insert into pendingOrder(user, isbn, qty, total) values(%s,%s,%s,%s)", [session['user'], request.form['isbn'], 1, price])
+   else:
+      cur.execute("select * from pendingOrder where (user=%s and isbn=%s)", [session['user'], request.form['isbn']])
+      book = cur.fetchall()
+
+      cur.execute("update pendingOrder set qty=%s where (user=%s and isbn=%s)", [ book[0][2]+1, session['user'], request.form['isbn']])
+      cur.execute("update pendingOrder set total=%s where (user=%s and isbn=%s)", [ price + book[0][3], session['user'], request.form['isbn']])
+
+   mysql.connection.commit()
+   cur.close()
+
+   return redirect(request.referrer)
 
 @app.route("/logout")
 def logout():
    session['user'] = None
    session['loggedIn'] = False
    session['isAdmin'] = False
+   session['cartQty'] = 0
+
    return redirect(url_for('home'))
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+   session['cartQty'] = 0
    if 'loggedIn' in session and session['loggedIn']:
       return redirect(url_for('home'))
    form = LoginForm()
@@ -274,6 +323,18 @@ def shop():
 @app.route("/construction")
 def construction():
    return render_template('construction.html')
+
+@app.route("/view_cart")
+def view_cart():
+
+   cur = mysql.connection.cursor()
+   cur.execute("select * from pendingOrder where user=%s", [session['user']])
+   cart = cur.fetchall()
+   totalPrice = 0
+   for book in cart:
+      totalPrice += book[3]
+   return render_template("view_cart.html", cart=cart, totalPrice=totalPrice)
+   
 
 @app.route("/edit_profile", methods=['GET', 'POST'])
 def edit_profile():
@@ -451,7 +512,8 @@ def manage_books():
       print("add book")
       cur = mysql.connection.cursor()
       try:
-         cur.execute("insert into book (isbn,author,category,title,buy_price,sell_price) values(%s, %s, %s, %s, %s, %s)", (form2.isbn.data, form2.author.data, form2.category.data, form2.title.data, form2.buy_price.data, form2.sell_price.data))
+         print("insert into book (isbn,author,category,title,sell_price,min_threshold) values(%s, %s, %s, %s, %s, %s)", (form2.isbn.data, form2.author.data, form2.category.data, form2.title.data, form2.sell_price.data, form2.min_threshold.data))
+         cur.execute("insert into book (isbn,author,category,title,sell_price,min_threshold) values(%s, %s, %s, %s, %s, %s)", (form2.isbn.data, form2.author.data, form2.category.data, form2.title.data, form2.sell_price.data, form2.min_threshold.data))
          mysql.connection.commit()
          cur.close()
          return redirect(url_for('manage_books'))
@@ -464,8 +526,9 @@ def manage_books():
       cur = mysql.connection.cursor()
 
       rowcount = cur.execute("select * from book where isbn=%s", [form.isbn.data])
-
+      book = cur.fetchall()
       if rowcount > 0:
+         cur.execute("insert into archivedbook (isbn,author,category,title,sell_price,min_threshold) values(%s, %s, %s, %s, %s, %s)", (book[0][0],book[0][5],book[0][0],book[0][1],book[0][3],book[0][10]))
          cur.execute("DELETE FROM book WHERE isbn=%s;",[form.isbn.data])
          mysql.connection.commit()
          cur.close()
@@ -483,17 +546,17 @@ def returnBook():
 @app.route("/search", methods=['GET', 'POST'])
 def search():
    # searchform = SearchForm()
-   print("JERE")
+   # print("JERE")
    if request.method == "GET":
-      print(request.args)
-      print(request.args['search-query'])
-      print("JERE2")
+      # print(request.args)
+      # print(request.args['search-query'])
+      # print("JERE2")
       cur = mysql.connection.cursor()
       queryString = '%' + request.args['search-query'] + '%'
-      print(queryString)
+      # print(queryString)
       cur.execute("select * from book where (isbn like %s or title like %s or category like %s or author like %s)", [queryString,queryString,queryString,queryString])
       searchResults = cur.fetchall()
-      print(searchResults)
+      # print(searchResults)
 
    return render_template('search.html', searchResults=searchResults)
 

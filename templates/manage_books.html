@@ -75,7 +75,8 @@
               </a>
             </div>
             <div class="col-sm-3 col-sm-offset-3 text-right">
-              <span class="iconify" data-icon="ion-md-cart" data-inline="false"></span> 0 books
+              <span class="iconify" data-icon="ion-md-cart" data-inline="false"></span> 
+              <a href="view_cart">{{session['cartQty']}} books</a>
               <form method="GET" action="/search">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search-query" placeholder="search here">
@@ -243,7 +244,7 @@
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-6">
                   <div class="form-group">
-                    {{ wtf.form_field(form2.buy_price) }}
+                    {{ wtf.form_field(form2.min_threshold) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-6">
