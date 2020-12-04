@@ -32,29 +32,29 @@
     
     <body>
  <!-- Bookstore Header -->
- <div class="site-header-bg">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-              <a href="home">
-                <a href="home"><img width=250px src="{{ url_for('static', filename= 'site_images/book_logo.png') }}" alt="logo"></a>
-              </a>
-            </div>
-            <div class="col-sm-3 col-sm-offset-3 text-right">
-              <span class="iconify" data-icon="ion-md-cart" data-inline="false"></span> 
-              <a href="/view_cart">{{session['cartQty']}} books</a>
-              <form method="GET" action="/search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="search-query" placeholder="search here">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default btn-robot" type="submit">Search</button>
-                        </span>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+    <div class="site-header-bg">
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-6">
+                <a href="home">
+                  <a href="home"><img width=250px src="{{ url_for('static', filename= 'site_images/book_logo.png') }}" alt="logo"></a>
+                </a>
+              </div>
+              <div class="col-sm-3 col-sm-offset-3 text-right">
+                <span class="iconify" data-icon="ion-md-cart" data-inline="false"></span>
+                <a href="view_cart">{{session['cartQty']}} books</a>
+                <form method="GET" action="/search">
+                      <div class="input-group">
+                          <input type="text" class="form-control" name="search-query" placeholder="search here">
+                          <span class="input-group-btn">
+                              <button class="btn btn-default btn-robot" type="submit">Search</button>
+                          </span>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
   <!-- Header -->
 
 
@@ -75,10 +75,10 @@
 
                 <div class="collapse navbar-collapse" id="site-nav-bar">
                     <ul class="nav navbar-nav">
-                        <li><a href="/home">Home</a></li>
-                        <li><a href="/about">About</a></li>
-                        <li class="active"><a href="/books">Books</a></li>
-                        <li><a href="pages.html">Pages</a></li>
+                        <li class="active"><a href="home">Home</a></li>
+                        <li><a href="about">About</a></li>
+                        <li><a href="books">Books</a></li>
+                        <li><a href="shop">Shop</a></li>
                         {% if session['loggedIn'] %}
                         <li><a href="edit_profile">Profile</a></li>
                         <li><a href="logout">Log Out</a></li>
@@ -89,6 +89,8 @@
                 </div>
             </nav>
         </div>
+
+
 
 
         <div class="intro row">

@@ -313,7 +313,15 @@ def about():
 
 @app.route("/checkout")
 def checkout():
-   return render_template('checkout.html')
+   cur = mysql.connection.cursor()
+   cur.execute("select * from pendingOrder where user=%s", [session['user']])
+   cart = cur.fetchall()
+   totalPrice = 0
+   for book in cart:
+      totalPrice += book[3]
+   return render_template("checkout.html", cart=cart, totalPrice=totalPrice)
+
+  
 
 
 
