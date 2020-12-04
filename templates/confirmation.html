@@ -135,7 +135,7 @@
 				  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
 				  
 				  
-				  <a href={{ url_for("book_landing_page", isbn=book[0]) }}> <img width="75" height="75" class="img-responsive" src={{"http://covers.openlibrary.org/b/isbn/" + book[1] + ".jpg"}}> </a>
+				  <a href={{ url_for("book_landing_page", isbn=book[1]) }}> <img width="75" height="75" class="img-responsive" src={{"http://covers.openlibrary.org/b/isbn/" + book[1] + ".jpg"}}> </a>
 				  
                 </td>
                 <td align="left"
@@ -163,7 +163,7 @@
                       <div class="title-box" >
                         <h3 class="sub-title" style="text-align: left; margin-left: 1em;">Billing Information</h3>
                         {% for item in info %}
-                          <p> {{item}}</p>
+                          <p> {{item}} </p>
                           {%endfor%}
                         <hr>
                       </div> 
