@@ -1,240 +1,245 @@
+
 <!DOCTYPE html>
-  <html lang="en" dir="ltr">
-    <head>
-      <meta charset="utf-8">
-      <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}"
-      <link rel="shortcut icon"href="favicon.ico">
-    </head>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    
-<style>
-body {
-  font-family: Arial;
-  font-size: 17px;
-  padding: 8px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  margin: 0 -16px;
-}
-
-.col-25 {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-}
-
-.col-50 {
-  -ms-flex: 50%; /* IE10 */
-  flex: 50%;
-}
-
-.col-75 {
-  -ms-flex: 75%; /* IE10 */
-  flex: 75%;
-}
-
-.col-25,
-.col-50,
-.col-75 {
-  padding: 0 16px;
-}
-
-.container {
-  background-color: #f2f2f2;
-  padding: 5px 20px 15px 20px;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-}
-
-input[type=text] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-.icon-container {
-  margin-bottom: 20px;
-  padding: 7px 0;
-  font-size: 24px;
-}
-
-.btn {
-  background-color:steelblue;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  width: 100%;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
-.btn:hover {
-  background-color: #45a049;
-}
-
-a {
-  color: #2196F3;
-}
-
-hr {
-  border: 1px solid lightgrey;
-}
-
-span.price {
-  float: right;
-  color: grey;
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25 {
-    margin-bottom: 20px;
-  }
-}
-</style>
-</head>
+    <title>Bookstore</title>
 
 
+     <!-- google fonts -->
+     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+     <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 
-<header>
-    <div id = header>
-   <img src="FAVPNG_book-reading-clip-art_HDRQJKvs.png">
+     <!-- CSS files -->
+     <link href="{{url_for('static', filename= 'css/bootstrap.min.css') }}" rel="stylesheet">
+     <link href="{{url_for('static', filename= 'css/magnific-popup.css') }}" rel="stylesheet">
+     <link href="{{url_for('static', filename= 'css/owl.carousel.css') }}" rel="stylesheet">
+     <link href="{{url_for('static', filename= 'css/owl.carousel.theme.min.css') }}" rel="stylesheet">
+     <link href="{{url_for('static', filename= 'css/ionicons.css') }}" rel="stylesheet">
+     <link href="{{url_for('static', filename= 'css/main.css') }}" rel="stylesheet">
+     
+     
+ 
+    <link rel="shortcut icon"href="favicon.ico">
 
-   <h3><em>Books</em></h3>
-    
-   <h4>Find the best books for you</h4>
-  </div>
-   <nav id = "nav_menu">
-    <ul>
-      <li ><a id="nav_link" href="main.html">Home</a></li>
-      <li><a href="strength.html">Adventure</a></li>
-      <li><a href="cardio_exercises.html">Fiction</a></li>
-      <li><input type="text" placeholder="Search.."></li>
-      <li><a href= "singup.html"> Sign Up</a></li>
-  </nav>
-</header>
-<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 
-<h2> Checkout Form</h2>
-<div class="row">
-  <div class="col-75">
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+  </head>
+  
+  <body>
+<!-- Bookstore Header -->
+  <div class="site-header-bg">
     <div class="container">
-      <form action="/action_page.php">
-      
         <div class="row">
-          <div class="col-50">
-            <h3>Billing Address</h3>
-            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-            <label for="email"><i class="fa fa-envelope"></i> Email</label>
-            <input type="text" id="email" name="email" placeholder="john@example.com">
-            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-            <label for="city"><i class="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" placeholder="New York">
-
-            <div class="row">
-              <div class="col-50">
-                <label for="state">State</label>
-                <input type="text" id="state" name="state" placeholder="NY">
-              </div>
-              <div class="col-50">
-                <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" placeholder="10001">
-              </div>
+            <div class="col-sm-6">
+              <a href="home">
+                <a href="home"><img width=250px src="{{ url_for('static', filename= 'site_images/book_logo.png') }}" alt="logo"></a>
+              </a>
             </div>
-          </div>
-
-          <div class="col-50">
-            <h3>Payment</h3>
-            <label for="fname">Accepted Cards</label>
-            <div class="icon-container">
-              <i class="fa fa-cc-visa" style="color:navy;"></i>
-              <i class="fa fa-cc-amex" style="color:blue;"></i>
-              <i class="fa fa-cc-mastercard" style="color:red;"></i>
-              <i class="fa fa-cc-discover" style="color:orange;"></i>
+            <div class="col-sm-3 col-sm-offset-3 text-right">
+              <span class="iconify" data-icon="ion-md-cart" data-inline="false"></span>
+              <a href="view_cart">{{session['cartQty']}} books</a>
+              <form method="GET" action="/search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search-query" placeholder="search here">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn-robot" type="submit">Search</button>
+                        </span>
+                    </div>
+                </form>
             </div>
-            <label for="cname">Name on Card</label>
-            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-            <label for="ccnum">Credit card number</label>
-            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-            <label for="expmonth">Exp Month</label>
-            <input type="text" id="expmonth" name="expmonth" placeholder="September">
-            <div class="row">
-              <div class="col-50">
-                <label for="expyear">Exp Year</label>
-                <input type="text" id="expyear" name="expyear" placeholder="2018">
-              </div>
-              <div class="col-50">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="352">
-              </div>
-            </div>
-          </div>
-          
         </div>
-        <label>
-          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-        </label>
-        <input type="submit" value="Continue to checkout" class="btn">
-      </form>
     </div>
-  </div>
-  <div class="col-25">
-    <div class="container">
-      <h4>Cart/Order Summary <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-      <p><a href="#">Product 1 </a> <span class="price">$15   
-        <select id="quantity" name="quantity">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-    </span> </p>
-      <p><a href="#">Product 2</a> <span class="price">$5 <select id="quantity" name="quantity">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select></span></p>
-      <p><a href="#">Product 3</a> <span class="price">$8 <select id="quantity" name="quantity">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select></span></p>
-      <p><a href="#">Product 4</a> <span class="price">$2 <select id="quantity" name="quantity">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select></span></p>
-      <hr>
-      <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
-    </div>
-  </div>
 </div>
+<!-- Header -->
+
+
+
+<section id="header" class="main-header">
+  <div class="container">
+
+      <div class="row">
+          <nav class="navbar navbar-default">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+              </div>
+
+              <div class="collapse navbar-collapse" id="site-nav-bar">
+                  <ul class="nav navbar-nav">
+                      <li class="active"><a href="home">Home</a></li>
+                      <li><a href="about">About</a></li>
+                      <li><a href="books">Books</a></li>
+                      <li><a href="shop">Shop</a></li>
+                      {% if session['loggedIn'] %}
+                      <li><a href="edit_profile">Profile</a></li>
+                      <li><a href="logout">Log Out</a></li>
+                      {% else %}
+                      <li><a href= "login">Log In</a></li>
+                      {% endif %}
+                  </ul>
+              </div>
+          </nav>
+      </div>
+
+
+      <div class="intro row">
+        <div class="overlay"></div>
+        <div class="col-sm-6 col-sm-offset-6">
+          {% if session['loggedIn'] %}
+
+          <h2 class="header-quote">Welcome {{session['user']}}</h2>
+              {% endif %}
+
+            <h2 class="header-quote">Buy or rent books</h2>
+            <p>
+                <!-- Another line of info here -->
+            </p>
+            <h1 class="header-title">Book<br><span class="thin">Store</span></h1>
+        </div>
+    </div>
+</div>
+<div class="nutral"></div>
+</section>
+
+
+
+
+<section id="product" class="product">
+  <div class="container section-bg">
+    <div class="row" style="">
+    <div class="boxed">
+      <div class="col-sm-12">
+        <div class="title-box">
+          <h2 class="title">Checkout <span></span></h2>
+
+          <h3 style="text-align: left;">Payment & Shipping </h3>
+          <hr>
+          
+              
+          <table align="left"
+      style="font-family:Courier; text-transform:none; font-size: 15px;border: 1px solid black; border-collapse: collapse; ">
+              <tr>
+
+              <td align="left"
+                              style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Cover:
+                              </td>
+                              
+                              <td align="left"
+                              style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Author:
+                              </td>
+
+                              <td align="left"
+                              style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Price:
+                              </td>
+                              <td align="left"
+                              style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Quantity:
+                              </td>
+
+                          </tr>
+                         
+              
+             
+
+            <tr>
+
+      <td align="left"
+        style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+        
+       
+        
+       
+        
+              </td>
+              <td align="left"
+                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+               
+              </td>
+
+              <td align="left"
+                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+           
+              
+              </td>
+              <td align="left"
+                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
+            
+              </td>
+            </tr>
+          
+          </table>
+          <div class="text-center mt20 col-sm-12">
+
+          <p style="text-align: left; color: black; padding:">Total: </p>
+          <form action="/view_cart">
+                  <button type="submit" class="btn btn-robot pull-left" id="cfsubmit" style="margin-bottom: 2em; margin-top: 0em; ">Edit Cart</button>
+          </form>
+                </div>
+        </div>
+
+              </div>
+              </div>
+              </div>
+        <div class="container" >
+        
+        <div class="row">
+          <div class="boxed">
+            <form action="confirmation.php" class="contact-form" id="add_user" method="POST" algn="left">
+              <div class="row">
+                <div class="col-sm-5">
+                  <div class="form-group">
+                      <input type="text" class="form-control" name="name" placeholder="name" id="username" required>
+                  </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+                <div class="col-sm-5">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="ccnumber" placeholder="1111-2222-3333-4444" id="password">
+                  </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+                <div class="col-sm-5">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="addy" placeholder="1418 Earth Drive" id="email">
+                  </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="zip" placeholder="Zip Code" id="address">
+                  </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="state" placeholder="state" id="address">
+                  </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+                <div class="col-sm-5">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="phone" placeholder="800-400-200" id="name" >
+                  </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+                <div class="col-sm-5">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="email" placeholder="Email" id="phone">
+                  </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+
+
+                <div  class="text-center mt20 col-sm-12">
+                  <button type="submit" class="btn btn-robot pull-left" id="cfsubmit" style="margin-bottom: 15px;">Submit</button>
+                </div>
+          </form>
+        
+  </div>
+  
+</section>
 
 </body>
-
-<footer> 
-    <p id="copyright">&copy; 2019 Shape Up!</p>  
-  </footer>
 </html>
-

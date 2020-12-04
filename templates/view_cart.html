@@ -103,8 +103,9 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="title-box">
-            <h2 class="title"> My</h2> <span>Cart</span></h2>
+            <h2 class="title"> My Cart</h2></h2>
           </div>
+            </div>
             
             <table align="center"
 			  style="font-family:Courier; text-transform:none; font-size: 20px;border: 1px solid black; border-collapse: collapse">
@@ -163,7 +164,7 @@
               {% endfor %}
             </table>
             <div class="text-center mt20 col-sm-12">
-            <form action="view_cart.php">
+            <form action="/checkout">
                 <b>              Total price: {{ totalPrice }}
                 </b>
                     <button type="submit" class="btn btn-robot pull-left" id="cfsubmit" style="margin-bottom: 2em; margin-top: 3em; ">Checkout</button>

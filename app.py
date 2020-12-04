@@ -311,6 +311,12 @@ def about():
    return render_template('about.html')
 
 
+@app.route("/checkout")
+def checkout():
+   return render_template('checkout.html')
+
+
+
 @app.route("/shop", methods=['GET', 'POST'])
 def shop():
    cur = mysql.connection.cursor()
