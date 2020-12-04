@@ -113,6 +113,15 @@ class ChangePass(FlaskForm):
    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
    newpassword = PasswordField('new password', validators=[Length(min=8, max=80)])
 
+class CheckoutForm(FlaskForm):
+   name = StringField('full name', validators=[InputRequired(), Length(min=1, max=100)])
+   address = StringField('address', validators=[InputRequired(), Length(min=2, max=80)])
+   ccnumber = StringField('credit card number', validators=[InputRequired(), Length(min=14, max=18)])
+   email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+   phone = StringField('phone number', validators=[InputRequired(), Length(min=7, max=15)])
+   zipcode = StringField('zipcode', validators=[InputRequired(), Length(min=2, max=80)])
+   state = StringField('state', validators=[InputRequired(), Length(min=2, max=80)])
+
 class User():
    username =""
    address = ""
@@ -314,13 +323,16 @@ def about():
 
 @app.route("/checkout", methods=['GET', 'POST'])
 def checkout():
+
+   form = CheckoutForm()
+
    cur = mysql.connection.cursor()
    cur.execute("select * from pendingOrder where user=%s", [session['user']])
    cart = cur.fetchall()
    totalPrice = 0
    for book in cart:
       totalPrice += book[3]
-   return render_template("checkout.html", cart=cart, totalPrice=totalPrice)
+   return render_template("checkout.html", form=form, cart=cart, totalPrice=totalPrice)
 
   
 
@@ -341,7 +353,19 @@ def construction():
 
 @app.route("/confirmation", methods=['GET', 'POST'])
 def confirmation():
-   
+
+   info = []
+
+   form = CheckoutForm()
+   if form.validate_on_submit():
+      info.append(form.name.data)
+      info.append("Credit Card ending in " + form.ccnumber.data[-4:])
+      info.append(form.address.data)
+      info.append(form.phone.data)
+      info.append(form.zipcode.data)
+      info.append(form.state.data)
+      info.append(form.email.data)
+
    id = ""
    cur = mysql.connection.cursor()
    cur.execute("select * from pendingOrder where user=%s", [session['user']])
@@ -370,7 +394,7 @@ def confirmation():
    session['cartQty'] = 0
 
 
-   return render_template('confirmation.html', cart=cart, totalPrice=totalPrice,request=request)
+   return render_template('confirmation.html', cart=cart, totalPrice=totalPrice,request=request, info=info)
 
 @app.route("/view_cart" , methods=['GET', 'POST'])
 def view_cart():

@@ -162,6 +162,9 @@
                     <div class="col-sm-12">
                       <div class="title-box" >
                         <h3 class="sub-title" style="text-align: left; margin-left: 1em;">Billing Information</h3>
+                        {% for item in info %}
+                          <p> {{item}}</p>
+                          {%endfor%}
                         <hr>
                       </div> 
                       <p style="margin-top: 1em; color: black; margin-left: 4em;">{</p>

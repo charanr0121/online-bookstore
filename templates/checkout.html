@@ -1,3 +1,4 @@
+{% import "bootstrap/wtf.html" as wtf %}
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -209,37 +210,38 @@
               <div class="row">
                 <div class="col-sm-5">
                   <div class="form-group">
-                      <input type="text" class="form-control" name="name" placeholder="name" id="username" required>
+                    {{ form.hidden_tag() }}
+                    {{ wtf.form_field(form.name) }}
+                 </div> <!-- /.form-group -->
+                </div> <!-- /.col-sm-6 -->
+                <div class="col-sm-5">
+                  <div class="form-group">
+                    {{ wtf.form_field(form.ccnumber) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-5">
                   <div class="form-group">
-                    <input type="text" class="form-control" name="ccnumber" placeholder="1111-2222-3333-4444" id="password" required>
-                  </div> <!-- /.form-group -->
-                </div> <!-- /.col-sm-6 -->
-                <div class="col-sm-5">
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="addy" placeholder="1418 Earth Drive" id="email" required>
+                    {{ wtf.form_field(form.address) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-2">
                   <div class="form-group">
-                    <input type="text" class="form-control" name="zip" placeholder="Zip Code" id="address" required>
+                    {{ wtf.form_field(form.zipcode) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <input type="text" class="form-control" name="state" placeholder="state" id="address" required>
+                    {{ wtf.form_field(form.state) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-5">
                   <div class="form-group">
-                    <input type="text" class="form-control" name="phone" placeholder="800-400-200" id="name" required>
+                    {{ wtf.form_field(form.phone) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
                 <div class="col-sm-5">
                   <div class="form-group">
-                    <input type="text" class="form-control" name="email" placeholder="Email" id="phone" required>
+                    {{ wtf.form_field(form.email) }}
                   </div> <!-- /.form-group -->
                 </div> <!-- /.col-sm-6 -->
 
