@@ -370,7 +370,7 @@ def confirmation():
    session['cartQty'] = 0
 
 
-   return render_template('confirmation.html', cart=cart, totalPrice=totalPrice)
+   return render_template('confirmation.html', cart=cart, totalPrice=totalPrice,request=request)
 
 @app.route("/view_cart" , methods=['GET', 'POST'])
 def view_cart():
