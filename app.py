@@ -295,6 +295,7 @@ def signup():
          mail.send(msg)
          print("HERERERE")
          return render_template("index.html", confirmAlert=True)
+         #dd
         # '<h1>check for confirmation email at ' + form.email.data + '</h1>'
 
       except:
