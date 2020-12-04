@@ -365,6 +365,8 @@ def confirmation():
 
    info = []
 
+
+   print("HERE 1")
    form = CheckoutForm()
    if form.validate_on_submit():
       info.append(form.name.data)
@@ -374,6 +376,15 @@ def confirmation():
       info.append(form.zipcode.data)
       info.append(form.state.data)
       info.append(form.email.data)
+      print("HERE2")
+   else: 
+      cur = mysql.connection.cursor()
+      cur.execute("select * from user where username=%s",[session['user']])
+      res = cur.fetchall()
+      print(res)
+      for item in res[0]:
+         info.append(str(item))
+
 
    id = ""
    cur = mysql.connection.cursor()
@@ -396,7 +407,7 @@ def confirmation():
       cur.execute("insert into completedOrder (id,user, isbn, date, qty, total) values(%s,%s,%s,%s,%s,%s)", ( id,book[0], book[1], formatted_date, book[2],book[3]))
       mysql.connection.commit()
    
-   msg = Message('Order Confirmation', sender="ugaonlinebookstore@gmail.com", recipients=[info[6]])
+   msg = Message('Order Confirmation', sender="ugaonlinebookstore@gmail.com", recipients=["victorelujinmi@gmail.com"])
 
    msg.body = 'Hi ' + info[0] +'! New order on your account with order number ' + id + '. Items will be sent to ' + info[2] + ' ' + info[4] + '. Thanks for shopping with us!'
 
