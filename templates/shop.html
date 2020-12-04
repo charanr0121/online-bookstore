@@ -75,10 +75,10 @@
 
                 <div class="collapse navbar-collapse" id="site-nav-bar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="home">Home</a></li>
+                        <li><a href="home">Home</a></li>
                         <li><a href="about">About</a></li>
                         <li><a href="books">Books</a></li>
-                        <li><a href="shop">Shop</a></li>
+                        <li class="active"><a href="shop">Shop</a></li>
                         {% if session['loggedIn'] %}
                         <li><a href="edit_profile">Profile</a></li>
                         <li><a href="logout">Log Out</a></li>
@@ -103,29 +103,22 @@
 			  				<tr>
 
 							  <td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Cover:
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">ISBN:
                                 </td>
                                 <td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">ISBN:
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Title:
                                 </td>
                                 <td align="left"
                                 style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Author:
                             
                                 </td>
                                 <td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Title:
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Category:
                                 </td>
 
                                 <td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Category:
+                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Price:
                                 </td>
-                                
-                                <td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Buy Price:
-								</td>
-								<td align="left"
-                                style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Sell Price:
-								</td>
 								<td align="left"
                                 style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">Add to Cart:
                                 </td>
@@ -144,11 +137,7 @@
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{book[2]}}
-                </td>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{book[3]}}
+                  {{book[5]}}
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
@@ -156,11 +145,7 @@
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{book[5]}}
-                </td>
-                <td align="left"
-                  style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">
-                  {{book[6]}}
+                  {{book[3]}}
                 </td>
                 <td align="left"
                   style="padding-left: 10px;padding-right: 10px; border: 1px solid black; border-collapse: collapse">

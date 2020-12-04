@@ -251,6 +251,13 @@ def login():
                session['name'] = results[0][7]
                session['phone'] = results[0][8]
                
+               cur = mysql.connection.cursor()
+               rowcount = cur.execute("select * from pendingOrder where user=%s", [session['user']])
+               if rowcount > 0:
+                  res = cur.fetchall()
+                  for item in res:
+                     session['cartQty'] += item[2]
+
                if results[0][9]==1:
                   session['isAdmin'] = True
                   return redirect(url_for('admin_page'))
@@ -286,8 +293,9 @@ def signup():
          msg.body = 'Your confirmation link is {}'.format(link)
 
          mail.send(msg)
-
-         return '<h1>check for confirmation email at ' + form.email.data + '</h1>'
+         print("HERERERE")
+         return render_template("index.html", confirmAlert=True)
+        # '<h1>check for confirmation email at ' + form.email.data + '</h1>'
 
       except:
          print("DUPLICATE ENTRY")
@@ -386,8 +394,14 @@ def confirmation():
      
       cur.execute("insert into completedOrder (id,user, isbn, date, qty, total) values(%s,%s,%s,%s,%s,%s)", ( id,book[0], book[1], formatted_date, book[2],book[3]))
       mysql.connection.commit()
-      
    
+   msg = Message('Order Confirmation', sender="ugaonlinebookstore@gmail.com", recipients=[info[6]])
+
+   msg.body = 'Hi ' + info[0] +'! New order on your account with order number ' + id + '. Items will be sent to ' + info[2] + ' ' + info[4] + '. Thanks for shopping with us!'
+
+   mail.send(msg)
+   
+
    cur.execute("DELETE FROM pendingOrder WHERE user=%s;", [session['user']])
    mysql.connection.commit()
    cur.close()
